@@ -6,7 +6,7 @@ function convertToBool(text, fault = 'true') {
     return text === fault ? true : false;
 }
 module.exports = {
-SESSION_ID: process.env.SESSION_ID || "malvin~lndlBahL#0nH2atgdoZJlZ-52TWg-D5ODHUY_4KHn1V1sdBMPE64",
+SESSION_ID: process.env.SESSION_ID || "malvin~460CRZrb#CsKufq_E6_LW1N_hRIjpgqOIE4rvBDN77LG0JLIjKDc",
 // add your Session Id make sure it starts with malvin~
 PREFIX: process.env.PREFIX || ".",
 // add your prifix for bot   
@@ -21,7 +21,7 @@ LINK_WHITELIST: "youtube.com,github.com",
 
     LINK_ACTION: "kick", // "kick", "mute", or "none"
 
-        AUTO_STATUS_SEEN: process.env.AUTO_STATUS_SEEN || "true",
+        AUTO_STATUS_SEEN: process.env.AUTO_STATUS_SEEN || "false",
 // make true or false status auto seen
 
         AUTO_STATUS_REPLY: process.env.AUTO_STATUS_REPLY || "false",
