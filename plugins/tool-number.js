@@ -5,7 +5,7 @@ malvin({
     pattern: "tempnum",
     alias: ["fakenum", "tempnumber"],
     desc: "Get temporary numbers & OTP instructions",
-    category: "tools",
+    category: "other",
     react: "📱",
     use: "<country-code>"
 },
@@ -93,7 +93,7 @@ malvin({
     pattern: "otpbox",
     alias: ["checkotp", "getotp"],
     desc: "Check OTP messages for temporary number",
-    category: "tools",
+    category: "other",
     react: "🔑",
     use: "<full-number>"
 },

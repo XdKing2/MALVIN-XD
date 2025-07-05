@@ -242,7 +242,7 @@ async (conn, mek, m, { args, reply }) => {
 });
 
 malvin({
-    pattern: "timenow",
+    pattern: "time",
     desc: "Check the current local time.",
     category: "main",
     filename: __filename,
@@ -252,13 +252,13 @@ async (conn, mek, m, { reply }) => {
         // Get current date and time
         const now = new Date();
         
-        // Get local time in Pakistan timezone (Africa/Nairobi)
+        // Get local time in Zimbabwe timezone (Africa/Nairobi)
         const localTime = now.toLocaleTimeString("en-US", { 
             hour: "2-digit", 
             minute: "2-digit", 
             second: "2-digit", 
             hour12: true,
-            timeZone: "Africa/Nairobi" // Setting Africa time zone explicitly
+            timeZone: "Africa/Harare" // Setting Africa time zone explicitly
         });
         
         // Send the local time as reply

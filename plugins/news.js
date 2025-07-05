@@ -4,7 +4,7 @@ const { malvin } = require('../malvin');
 malvin({
     pattern: "news",
     desc: "Get the latest news headlines.",
-    category: "news",
+    category: "download",
     react: "📰",
     filename: __filename
 },

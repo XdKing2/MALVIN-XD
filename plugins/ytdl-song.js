@@ -34,17 +34,24 @@ malvin({
 
         const { url, title, image, timestamp, ago, views, author } = data.results[0];
 
-        let info = `🍄 *𝚂𝙾𝙽𝙶 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳𝙴𝚁* 🍄\n\n` +
-            `🎵 *Title:* ${title || "Unknown"}\n` +
-            `⏳ *Duration:* ${timestamp || "Unknown"}\n` +
-            `👀 *Views:* ${views || "Unknown"}\n` +
-            `🌏 *Release Ago:* ${ago || "Unknown"}\n` +
-            `👤 *Author:* ${author?.name || "Unknown"}\n` +
-            `🖇 *Url:* ${url || "Unknown"}\n\n` +
-            `🔽 *Reply with your choice:*\n` +
-            `1 *Audio Type* 🎵\n` +
-            `2 *Document Type* 📁\n\n` +
-            `${config.FOOTER || "ᴍᴀʟᴠɪɴ-xᴅ"}`;
+        let info = `🎧 *𝚂𝙾𝙽𝙶 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳𝙴𝚁* 🎧
+        
+╭──❍ ᴍᴀʟᴠɪɴ xᴅ ᴅʟ ❍        
+┊🎵 *ᴛɪᴛʟᴇ:* ${title || "Unknown"}
+┊
+┊⏳ *ᴅᴜʀᴀᴛɪᴏɴ:* ${timestamp || "Unknown"}
+┊👀 *ᴠɪᴇᴡs:* ${views || "Unknown"}
+┊🌏 *ʀᴇʟᴇᴀsᴇ:* ${ago || "Unknown"}
+┊👤 *ᴀᴜᴛʜᴏʀ:* ${author?.name || "Unknown"}
+┊🖇 *ᴜʀʟ:* ${url || "Unknown"} 
+╰─✪ 
+
+> ʀᴇᴘʟʏ ᴡɪᴛʜ ᴏᴘᴛɪᴏɴ 1 ᴏʀ 2:⤵️
+╭╼
+┊1 *Aᴜᴅɪᴏ Tʏᴘᴇ* 🎵
+┊2 *Dᴏᴄᴜᴍᴇɴᴛ Tʏᴘᴇ* 📁 
+╰╼
+> ${config.FOOTER || "ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʟᴠɪɴ-xᴅ"}`;
 
         const sentMsg = await conn.sendMessage(from, { image: { url: image }, caption: info }, { quoted: mek });
         const messageID = sentMsg.key.id;
@@ -85,7 +92,7 @@ malvin({
                 }
 
                 await conn.sendMessage(from, type, { quoted: mek });
-                await conn.sendMessage(from, { text: '✅ Media Upload Successful ✅', edit: msg.key });
+                await conn.sendMessage(from, { text: '_sᴏɴɢ ᴅᴏᴡɴʟᴏᴀᴅᴇᴅ sᴜᴄᴜssᴇғᴜʟʟʏ_ ✅', edit: msg.key });
 
             } catch (error) {
                 console.error(error);

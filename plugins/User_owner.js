@@ -41,12 +41,12 @@ async (conn, mek, m, { from }) => {
         await conn.sendMessage(from, {
             image: { url: 'https://files.catbox.moe/v1rf80.jpg' }, // Image URL from your request
             caption: `
-╭┈┈┈───────┈┈┈┈┈┈┈┈┈
-┊• *Here are the owner details*
-┊• *𝑁𝑎𝑚𝑒* : ${ownerName}
-┊• *𝑁𝑢𝑚𝑏𝑒𝑟*: ${ownerNumber}
-┆• *𝑉𝑒𝑟𝑠𝑖𝑜𝑛*: ${config.version}
-╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
+╭┈┈❍ ᴍᴀʟᴠɪɴ xᴅ ❍
+┊• *Here are the user details*
+┊• *ɴᴀᴍᴇ* : ${ownerName}
+┊• *ɴᴜᴍʙᴇʀ*: ${ownerNumber}
+┆• *ᴠᴇʀsɪᴏɴ*: ${config.version}
+╰┈┈┈┈┈┈┈⭘
 > © sᴛᴀʏ ᴄᴏɴɴᴇᴄᴛᴇᴅ ғᴏʀ ғᴀɴᴛᴀsᴛɪᴄ ᴜᴘᴅᴀᴛᴇs!`, // Display the owner's details
             contextInfo: {
                 mentionedJid: [`${ownerNumber.replace('+', '')}@s.whatsapp.net`], 
@@ -58,13 +58,6 @@ async (conn, mek, m, { from }) => {
                     serverMessageId: 143
                 }            
             }
-        }, { quoted: mek });
-
-        // Send audio as per your request
-        await conn.sendMessage(from, {
-            audio: { url: 'https://github.com/kingmalvin5/MALVIN-DATA/raw/refs/heads/main/autovoice/intro.mp3' }, // Audio URL
-            mimetype: 'audio/mp4',
-            ptt: true
         }, { quoted: mek });
 
     } catch (error) {

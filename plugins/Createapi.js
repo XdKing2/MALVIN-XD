@@ -5,7 +5,7 @@ malvin({
     pattern: "createapi",
     desc: "Create a custom API endpoint",
     alias: ["makeapi", "apimaker"],
-    category: "utility",
+    category: "other",
     react: "🌐",
     filename: __filename
 }, async (conn, mek, m, { from, quoted, args, q, reply }) => {

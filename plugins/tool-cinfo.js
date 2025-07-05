@@ -5,7 +5,7 @@ malvin({
     pattern: "countryinfo",
     alias: ["cinfo", "country","cinfo2"],
     desc: "Get information about a country",
-    category: "info",
+    category: "other",
     react: "🌍",
     filename: __filename
 },

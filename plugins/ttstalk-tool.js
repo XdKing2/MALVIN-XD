@@ -6,7 +6,7 @@ malvin({
   alias: ["tstalk", "ttstalk"],
   react: "📱",
   desc: "Fetch TikTok user profile details.",
-  category: "search",
+  category: "other",
   filename: __filename
 }, async (conn, m, store, { from, args, q, reply }) => {
   try {

@@ -5,7 +5,7 @@ malvin({
   alias: ["cap", "recaption", "c"],
   react: '✏️',
   desc: "Add or change caption of media/document",
-  category: "utility",
+  category: "other",
   filename: __filename
 }, async (client, message, match, { from }) => {
   try {

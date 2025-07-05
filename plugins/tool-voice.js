@@ -5,7 +5,7 @@ malvin({
     pattern: "aivoice",
     alias: ["vai", "voicex", "voiceai"],
     desc: "Text to speech with different AI voices",
-    category: "main",
+    category: "convert",
     react: "🪃",
     filename: __filename
 },

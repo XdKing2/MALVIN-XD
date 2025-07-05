@@ -5,7 +5,7 @@ malvin({
     alias: ["id", "chatid", "gjid"],  
     desc: "Get full JID of current chat/user (Creator Only)",
     react: "🆔",
-    category: "utility",
+    category: "owner",
     filename: __filename,
 }, async (conn, mek, m, { 
     from, isGroup, isCreator, reply, sender 

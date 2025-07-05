@@ -1,4 +1,4 @@
 {
-  "version": "0.0.5",
-  "changelog": "📌 Fixed YouTube Downloader -: .play and .song \n 📌 Added Update command, plugin count, and command count.\n🛠 Improved system info.\n🚀 Enhanced update detection."
+  "version": "0.0.6",
+  "changelog": "🔧 *Changelog v0.0.6*\n\n✅ Fixed: YouTube Downloader commands `.play` & `.song`\n➕ Added: `.update` command, plugin counter, and total command counter\n🛠 Improved: System info response (faster & cleaner)\n🚀 Enhanced: Auto-update detection mechanism\n\n📝 Update recommended for best experience!"
 }

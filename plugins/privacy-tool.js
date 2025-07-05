@@ -9,7 +9,7 @@ malvin({
     pattern: "privacy",
     alias: ["privacymenu"],
     desc: "Privacy settings menu",
-    category: "privacy",
+    category: "owner",
     react: "🔐",
     filename: __filename
 }, 
@@ -19,16 +19,16 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
 ┃◈╭─────────────·๏
 ┃◈┃• blocklist - View blocked users
 ┃◈┃• getbio - Get user's bio
-┃◈┃• setppall - Set profile pic privacy
-┃◈┃• setonline - Set online privacy
+┃◈┃• setppall - Set profile pic owner
+┃◈┃• setonline - Set online owner
 ┃◈┃• setpp - Change bot's profile pic
 ┃◈┃• setmyname - Change bot's name
 ┃◈┃• updatebio - Change bot's bio
-┃◈┃• groupsprivacy - Set group add privacy
-┃◈┃• getprivacy - View current privacy settings
+┃◈┃• groupsprivacy - Set group add owner
+┃◈┃• getprivacy - View current owner settings
 ┃◈┃• getpp - Get user's profile picture
 ┃◈┃
-┃◈┃*Options for privacy commands:*
+┃◈┃*Options for owner commands:*
 ┃◈┃• all - Everyone
 ┃◈┃• contacts - My contacts only
 ┃◈┃• contact_blacklist - Contacts except blocked
@@ -41,14 +41,14 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
         await conn.sendMessage(
             from,
             {
-                image: { url: `https://files.catbox.moe/e463lh` }, // Replace with privacy-themed image if available
+                image: { url: `https://files.catbox.moe/e463lh` }, // Replace with owner-themed image if available
                 caption: privacyMenu,
                 contextInfo: {
                     mentionedJid: [m.sender],
                     forwardingScore: 999,
                     isForwarded: true,
                     forwardedNewsletterMessageInfo: {
-                        newsletterJid: '120363398430045533@newsletter',
+                        newsletterJid: '120363402507750390@newsletter',
                         newsletterName: "Privacy Settings",
                         serverMessageId: 143
                     }
@@ -67,7 +67,7 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
 malvin({
     pattern: "blocklist",
     desc: "View the list of blocked users.",
-    category: "privacy",
+    category: "owner",
     react: "📋",
     filename: __filename
 },
@@ -98,7 +98,7 @@ async (conn, mek, m, { from, isOwner, reply }) => {
 malvin({
     pattern: "getbio",
     desc: "Displays the user's bio.",
-    category: "privacy",
+    category: "owner",
     filename: __filename,
 }, async (conn, mek, m, { args, reply }) => {
     try {
@@ -114,7 +114,7 @@ malvin({
 malvin({
     pattern: "setppall",
     desc: "Update Profile Picture Privacy",
-    category: "privacy",
+    category: "owner",
     react: "🔐",
     filename: __filename
 }, 
@@ -130,7 +130,7 @@ async (conn, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, 
         }
         
         await conn.updateProfilePicturePrivacy(value);
-        reply(`✅ Profile picture privacy updated to: ${value}`);
+        reply(`✅ Profile picture owner updated to: ${value}`);
     } catch (e) {
         return reply(`*An error occurred while processing your request.*\n\n_Error:_ ${e.message}`);
     }
@@ -138,7 +138,7 @@ async (conn, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, 
 malvin({
     pattern: "setonline",
     desc: "Update Online Privacy",
-    category: "privacy",
+    category: "owner",
     react: "🔐",
     filename: __filename
 }, 
@@ -154,7 +154,7 @@ async (conn, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, 
         }
 
         await conn.updateOnlinePrivacy(value);
-        reply(`✅ Online privacy updated to: ${value}`);
+        reply(`✅ Online owner updated to: ${value}`);
     } catch (e) {
         return reply(`*An error occurred while processing your request.*\n\n_Error:_ ${e.message}`);
     }
@@ -163,7 +163,7 @@ async (conn, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, 
 malvin({
     pattern: "setpp",
     desc: "Set bot profile picture.",
-    category: "privacy",
+    category: "owner",
     react: "🖼️",
     filename: __filename
 },
@@ -192,7 +192,7 @@ async (conn, mek, m, { from, isOwner, quoted, reply }) => {
 malvin({
     pattern: "setmyname",
     desc: "Set your WhatsApp display name.",
-    category: "privacy",
+    category: "owner",
     react: "⚙️",
     filename: __filename
 },
@@ -226,7 +226,7 @@ malvin({
     pattern: "updatebio",
     react: "🥏",
     desc: "Change the Bot number Bio.",
-    category: "privacy",
+    category: "owner",
     use: '.updatebio',
     filename: __filename
 },
@@ -245,7 +245,7 @@ async (conn, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, 
 malvin({
     pattern: "groupsprivacy",
     desc: "Update Group Add Privacy",
-    category: "privacy",
+    category: "group",
     react: "🔐",
     filename: __filename
 }, 
@@ -261,7 +261,7 @@ async (conn, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, 
         }
 
         await conn.updateGroupsAddPrivacy(value);
-        reply(`✅ Group add privacy updated to: ${value}`);
+        reply(`✅ Group add owner updated to: ${value}`);
     } catch (e) {
         return reply(`*An error occurred while processing your request.*\n\n_Error:_ ${e.message}`);
     }
@@ -270,7 +270,7 @@ async (conn, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, 
 malvin({
     pattern: "getprivacy",
     desc: "Get the bot Number Privacy Setting Updates.",
-    category: "privacy",
+    category: "owner",
     use: '.getprivacy',
     filename: __filename
 },
@@ -278,7 +278,7 @@ async (conn, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, 
     try {
         if (!isOwner) return reply('🚫 *You must be an Owner to use this command*');
         const duka = await conn.fetchPrivacySettings?.(true);
-        if (!duka) return reply('🚫 *Failed to fetch privacy settings*');
+        if (!duka) return reply('🚫 *Failed to fetch owner settings*');
         
         let puka = `
 ╭───「 𝙿𝚁𝙸𝚅𝙰𝙲𝚈  」───◆  

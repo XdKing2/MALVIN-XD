@@ -6,7 +6,7 @@ malvin({
   alias: ["git"],
   desc: "Download GitHub repository as a zip file.",
   react: '📦',
-  category: "downloader",
+  category: "download",
   filename: __filename
 }, async (conn, m, store, {
   from,
@@ -43,7 +43,19 @@ malvin({
     const fileName = contentDisposition ? contentDisposition.match(/filename=(.*)/)[1] : `${repo}.zip`;
 
     // Notify user of the download
-    reply(`📥 *Downloading repository...*\n\n*Repository:* ${username}/${repo}\n*Filename:* ${fileName}\n\n> *Powered by Malvin*`);
+    reply(`
+    
+📥 *_Downloading repository..._*
+
+╭─❍ ᴍᴀʟᴠɪɴ-xᴅ ɢɪᴛ ᴅʟ ❍─
+┊
+╎*Rᴇᴘɪsɪᴛᴏʀʏ:* ${username}/${repo}
+┆
+╎*Fɪʟᴇɴᴀᴍᴇ:* ${fileName}
+╰─⟤
+> *ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʟᴠɪɴ ᴋɪɴɢ*
+
+`);
 
     // Send the zip file to the user with custom contextInfo
     await conn.sendMessage(from, {
@@ -55,8 +67,8 @@ malvin({
         forwardingScore: 999,
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
-          newsletterJid: '120363398430045533@newsletter',
-          newsletterName: 'Malvin King',
+          newsletterJid: '120363402507750390@newsletter',
+          newsletterName: 'ᴍᴀʟᴠɪɴ xᴅ ɢɪᴛ ᴅʟ',
           serverMessageId: 143
         }
       }

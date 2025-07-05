@@ -6,84 +6,68 @@ Support      : wa.me/263714757857
 */
 
 const config = require('../settings');
-const { malvin, commands } = require('../malvin');
-const os = require("os");
+const { malvin } = require('../malvin');
 const { runtime } = require('../lib/functions');
-const axios = require('axios');
+
 const more = String.fromCharCode(8206);
 const readMore = more.repeat(4001);
 
 malvin({
     pattern: "support",
-    alias: "follow",
-    desc: "base",
-    category: "support",
+    alias: ["follow", "links"],
+    desc: "Display support and follow links",
+    category: "main",
     react: "📡",
     filename: __filename
-}, async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+}, 
+async (conn, mek, m, {
+    from, reply, pushname
+}) => {
     try {
-
-        // Get the current time for dynamic greeting
         const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        
-        let dec = `
-╭────────────≫
-┋ 🌟 *ᴅᴇᴠᴇʟᴏᴘᴇʀ* : *ᴍʀ ᴍᴀʟᴠɪɴ (🇿🇼)* 🌍
-┋ 🚀 *ᴍᴏᴅᴇ* : *${config.MODE}*
-┋ ⚡ *ᴘʀᴇғɪx* : *${config.PREFIX}*
-┋ 🧩 *ᴠᴇʀsɪᴏɴ* : ${config.version}
-┋ ⏳ *ᴜᴘᴛɪᴍᴇ* : _${runtime(process.uptime())}_
-┋ 🕰️ *ᴄᴜʀʀᴇɴᴛ ᴛɪᴍᴇ* : _${currentTime}_
-╰────────────≫
+        const uptimeFormatted = runtime(process.uptime());
 
-   💬 *ᴍᴀʟᴠɪɴ xᴅ sᴜᴘᴘᴏʀᴛ ʟɪɴᴋs* ↷
+        const message = `
+╭─『 *𝗠𝗔𝗟𝗩𝗜𝗡 𝗫𝗗 - 𝗦𝗨𝗣𝗣𝗢𝗥𝗧* 』─
+│ 👤 *Developer* : Mr Malvin 🇿🇼
+│ ⚙️ *Mode*      : ${config.MODE}
+│ ⏱️ *Uptime*    : ${uptimeFormatted}
+│ 💠 *Prefix*    : ${config.PREFIX}
+│ 🔖 *Version*   : ${config.version}
+│ 🕰️ *Time*      : ${currentTime}
+╰─────────────
 
-${readMore}
-\`🔔 ᴄʜᴀɴɴᴇʟ🩵\`
-🔗 https://whatsapp.com/channel/0029VbA6MSYJUM2TVOzCSb2A
+📢 *Follow & Support MALVIN XD* ${readMore}
 
-\`👥 ɢʀᴏᴜᴘ💙\`
-🔗 https://chat.whatsapp.com/Di4685k99JS5RGdS2Z4WMi
+🔔 *Official WhatsApp Channel*
+🔗 https://whatsapp.com/channel/0029VbB3YxTDJ6H15SKoBv3S
 
-\`🎥 ʏᴛ ᴄʜᴀɴɴᴇʟ🚀\`
+🎬 *YouTube Channel*
 🔗 https://youtube.com/@malvintech2
 
-\`💻 ᴍʀ ᴍᴀʟᴠɪɴ ᴋ\` *Developer🧑‍💻*
-🔗 wa.me/263714757857?text=Support!
+👨‍💻 *Developer Contact*
+🔗 wa.me/263714757857?text=Hi%20Malvin,%20I%20need%20support!
 
-> 🚀 *ᴊᴏɪɴ ᴍᴀʟᴠɪɴ xᴅ ᴄʜᴀɴɴᴇʟ* 🚀
-`;
+> 💡 Powered by *Malvin King*
+        `.trim();
 
-        await conn.sendMessage(
-            from,
-            {
-                image: { url: `https://files.catbox.moe/bddvfr.jpg` },
-                caption: dec,
-                contextInfo: {
-                    mentionedJid: [m.sender],
-                    forwardingScore: 999,
-                    isForwarded: true,
-                    forwardedNewsletterMessageInfo: {
-                        newsletterJid: '120363398430045533@newsletter',
-                        newsletterName: '🪀『 𝙼𝙰𝙻𝚅𝙸𝙽-𝚇𝙳 』🪀',
-                        serverMessageId: 143
-                    }
-                }
-            },
-            { quoted: mek }
-        );
-
-        // Send audio message with a fun personalized touch
         await conn.sendMessage(from, {
-            audio: { url: 'https://github.com/XdKing2/MALVIN-DATA/raw/refs/heads/main/autovoice/menu2.mp3' },
-            mimetype: 'audio/mp3',
-            ptt: true
+            image: { url: 'https://files.catbox.moe/bddvfr.jpg' },
+            caption: message,
+            contextInfo: {
+                mentionedJid: [m.sender],
+                forwardingScore: 999,
+                isForwarded: true,
+                forwardedNewsletterMessageInfo: {
+                    newsletterJid: '120363402507750390@newsletter',
+                    newsletterName: '🪀『 𝙼𝙰𝙻𝚅𝙸𝙽-𝚇ᴅ 』🪀',
+                    serverMessageId: 143
+                }
+            }
         }, { quoted: mek });
 
     } catch (e) {
-        console.error(e);
-        reply(`*⚠️ Oops! Something went wrong:* ${e.message}`);
+        console.error("Support Cmd Error:", e);
+        reply(`⚠️ An error occurred:\n${e.message}`);
     }
 });
-
-//  MALVIN-XMD SC BY MR MALVIN K

@@ -6,7 +6,7 @@ malvin({
     react: "👤",
     alias: ["userinfo", "profile"],
     desc: "Get complete user profile information",
-    category: "utility",
+    category: "owner",
     use: '.person [@tag or reply]',
     filename: __filename
 },

@@ -5,7 +5,7 @@ malvin({
     pattern: "biblelist",
     alias: ["biblebooks", "listbible", "blist"], // Added aliases
     desc: "Get the complete list of books in the Bible.",
-    category: "search",
+    category: "download",
     react: "📜",
     filename: __filename
 }, async (conn, mek, m, { reply }) => {

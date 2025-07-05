@@ -6,7 +6,7 @@ malvin({
   alias: ["twitterstalk", "twtstalk"],
   desc: "Get details about a Twitter/X user.",
   react: "🔍",
-  category: "search",
+  category: "other",
   filename: __filename
 }, async (conn, m, store, { from, quoted, q, reply }) => {
   try {

@@ -5,33 +5,36 @@ const config = require('../settings');
 const { malvin } = require('../malvin');
 
 malvin({
-  pattern: "sss",
-  alias: ["ssweb"],
+  pattern: "ss",
+  alias: ["ssweb", "screenshot"],
   react: "💫",
-  desc: "Download screenshot of a given link.",
+  desc: "Take a screenshot of a website.",
   category: "other",
-  use: ".ss <link>",
-  filename: __filename,
+  use: ".ss <url>",
+  filename: __filename
 }, 
 async (conn, mek, m, {
-  from, l, quoted, body, isCmd, command, args, q, isGroup, sender, 
-  senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, 
-  groupMetadata, groupName, participants, isItzcp, groupAdmins, 
-  isBotAdmins, isAdmins, reply 
+  from, q, reply
 }) => {
   if (!q) {
-    return reply("Please provide a URL to capture a screenshot.");
+    return reply("🌐 Please provide a valid link to screenshot.\n\n📌 Example: `.ss https://example.com`");
+  }
+
+  if (!/^https?:\/\//i.test(q)) {
+    return reply("❗ Please make sure your link starts with `http://` or `https://`");
   }
 
   try {
-    // created by malvin tech 
-    const response = await axios.get(`https://api.davidcyriltech.my.id/ssweb?url=${q}`);
-    const screenshotUrl = response.data.screenshotUrl;
+    const apiUrl = `https://api.davidcyriltech.my.id/ssweb?url=${encodeURIComponent(q)}`;
+    const res = await axios.get(apiUrl);
 
-    // give credit and use
+    if (!res.data || !res.data.screenshotUrl) {
+      return reply("⚠️ Couldn't capture screenshot. Try another link.");
+    }
+
     const imageMessage = {
-      image: { url: screenshotUrl },
-      caption: "*WEB SS DOWNLOADER*\n\n> *© Powered By Malvin King*",
+      image: { url: res.data.screenshotUrl },
+      caption: `🖼️ *Web Screenshot Generated*\n\n🔗 *URL:* ${q}\n\n© Powered by *Malvin King*`,
       contextInfo: {
         mentionedJid: [m.sender],
         forwardingScore: 999,
@@ -39,16 +42,15 @@ async (conn, mek, m, {
         forwardedNewsletterMessageInfo: {
           newsletterJid: '120363398430045533@newsletter',
           newsletterName: "ᴍᴀʟᴠɪɴ-xᴅ",
-          serverMessageId: 143,
-        },
-      },
+          serverMessageId: 143
+        }
+      }
     };
 
     await conn.sendMessage(from, imageMessage, { quoted: m });
-  } catch (error) {
-    console.error(error);
-    reply("Failed to capture the screenshot. Please try again.");
+
+  } catch (err) {
+    console.error("Screenshot Error:", err);
+    reply("❌ Failed to take screenshot. Try again later.");
   }
 });
-
-

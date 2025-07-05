@@ -3,12 +3,13 @@
 const fetch = require('node-fetch');
 const config = require('../settings');    
 const { malvin } = require('../malvin');
+const fs = require('fs');
 
 malvin({
     pattern: "repo",
     alias: ["sc", "script"],
     desc: "Fetch information about a GitHub repository.",
-    react: "🧬",
+    react: "🪄",
     category: "info",
     filename: __filename,
 },
@@ -32,38 +33,38 @@ async (conn, mek, m, { from, reply }) => {
         const formattedInfo = `
     🚀 ᴍᴀʟᴠɪɴ xᴅ ʀᴇᴘᴏ ɪɴғᴏ 🚀
 
-╭──────────────━⊷
-┇🤖 *ɴᴀᴍᴇ:* ${repoData.name}
-┇⭐ *ᴛᴏᴛᴀʟ sᴛᴀʀs:* ${repoData.stargazers_count}
-┇👥️ *ғᴏʀᴋs:* ${repoData.forks_count}
-┇👀 *ᴡᴀᴛᴄʜᴇʀs:* ${repoData.watchers_count}
-┇👤 *ᴏᴡɴᴇʀ:* ᴍᴀʟᴠɪɴ ᴋɪɴɢ
-┇🪀 *ᴅᴇsᴄʀɪᴘᴛɪᴏɴ:* ${repoData.description || 'No description available'}
-╰──────────────━⊷
+╭────────────━⊷
+┊⭘
+┊⭘ 🤖 *ɴᴀᴍᴇ:* ${repoData.name}
+┊⭘ ⭐ *ᴛᴏᴛᴀʟ sᴛᴀʀs:* ${repoData.stargazers_count}
+┊⭘ 👥️ *ᴅᴀɪʟʏ ᴜsᴇʀs:* ${repoData.forks_count}
+┊⭘ 👤 *ᴏᴡɴᴇʀ:* ᴍᴀʟᴠɪɴ ᴋɪɴɢ
+┊⭘ 🪀 *ᴅᴇsᴄʀɪᴘᴛɪᴏɴ:* ${repoData.description || 'No description available'}
+
 > 🌟 Star & 🍴 Fork the repo for more updates!
 
-┋ ʀᴇᴘᴏ ʟɪɴᴋ: ${repoData.html_url}
-╰──────────────━⊷
+┊⭘ ʙᴏᴛ ʟɪɴᴋ: https://tinyurl.com/2xlrhx2c
+╰────────━⊷
 `;
 
         // Send an image with the formatted info as a caption and context info
         await conn.sendMessage(from, {
-            image: { url: `https://files.catbox.moe/qumhu4.jpg` },
+            image: { url: `https://files.catbox.moe/01f9y1.jpg` },
             caption: formattedInfo,
             contextInfo: { 
                 mentionedJid: [m.sender],
                 forwardingScore: 999,
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
-                    newsletterJid: '120363398430045533@newsletter',
+                    newsletterJid: '120363402507750390@newsletter',
                     newsletterName: 'ᴍᴀʟᴠɪɴ xᴅ ʀᴇᴘᴏ',
                     serverMessageId: 143
                 }
             }
         }, { quoted: mek });
         
-//send audio        
-await conn.sendMessage(from, {
+             //send audio        
+            await conn.sendMessage(from, {
             audio: fs.readFileSync('./autos/hello.m4a'),
                     mimetype: 'audio/mp4',
                     ptt: true,

@@ -6,7 +6,7 @@ malvin({
     pattern: "report",
     alias: ["ask", "bug", "request"],
     desc: "Report a bug or request a feature",
-    category: "utility",
+    category: "main",
     filename: __filename
 }, async (conn, mek, m, {
     from, body, command, args, senderNumber, reply

@@ -13,47 +13,47 @@ malvin({
     try {
         const name = pushname || "there";
 
-        const text = `
-╭─⌈ *𝗠𝗔𝗟𝗩𝗜𝗡-𝗫𝗗 𝗗𝗘𝗩𝗘𝗟𝗢𝗣𝗘𝗥* ⌋──
+        const caption = `
+╭─⌈ *👨‍💻 ᴍᴀʟᴠɪɴ-ˣᴅ ᴅᴇᴠᴇʟᴏᴘᴇʀ* ⌋─
 │
-│ 👋 Hello *${name}*,
+│ 👋 Hello, *${name}*!
 │
-│ 🤖 I’m *𝙈𝘼𝙇𝙑𝙄𝙉-𝙓𝘿 own*, a multi-functional
-│    WhatsApp Bot built to assist you!
+│ 🤖 I'm *Malvin King*, the creator and
+│    maintainer of this smart WhatsApp bot.
 │
-│ 👨‍💻 *OWNER DETAILS:*
-│ ───────────────
-│ 🧠 *Name* : Malvin King
-│ 🕯️ *Age* : +20
-│ ☎️ *Contact* : wa.me/+1(276) 698-8379
-│ ▶️ *YouTube* : Malvin King Tech (malvintech2)
-│    https://youtube.com/@malvintech2
+│ 👨‍💻 *ᴏᴡɴᴇʀ ɪɴꜰᴏ:*
+│ ──────────
+│ 🧠 *Name:* Malvin King
+│ 🎂 *Age:* +20
+│ 📞 *Contact:* wa.me/12766988379
+│ 📺 *YouTube:* Malvin King Tech
+│     https://youtube.com/@malvintech2
 │
-│ ⚡ Powered by *Malvin King*
-│
-╰───────────────
+╰─────────
+
+>⚡ ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʟᴠɪɴ-xᴅ
         `.trim();
 
         await conn.sendMessage(
             from,
             {
                 image: { url: 'https://files.catbox.moe/vfv7n6.jpg' },
-                caption: text,
+                caption: caption,
                 contextInfo: {
                     mentionedJid: [m.sender],
                     forwardingScore: 999,
                     isForwarded: true,
                     forwardedNewsletterMessageInfo: {
-                        newsletterJid: '120363398430045533@newsletter',
-                        newsletterName: '🪀『 𝙼𝙰𝙇𝚅𝙸𝙽-𝚇𝙳 』🪀',
+                        newsletterJid: '120363402507750390@newsletter',
+                        newsletterName: '🪀『 𝙼𝙰𝙻𝚅𝙸𝙽-𝚇𝙳 』🪀',
                         serverMessageId: 143
                     },
                     externalAdReply: {
                         title: "Malvin-XD Bot",
-                        body: "Created with love by Malvin King",
+                        body: "Created with ❤️ by Malvin King",
                         thumbnailUrl: 'https://files.catbox.moe/vfv7n6.jpg',
                         mediaType: 1,
-                        renderLargerThumbnail: true,
+                        renderSmallerThumbnail: true,
                         showAdAttribution: true,
                         mediaUrl: "https://youtube.com/@malvintech2",
                         sourceUrl: "https://youtube.com/@malvintech2"

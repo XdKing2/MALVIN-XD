@@ -12,7 +12,7 @@ malvin({
     use: '.yts malvinxd',
     react: "🔎",
     desc: "Search and get details from youtube.",
-    category: "search",
+    category: "download",
     filename: __filename
 
 },

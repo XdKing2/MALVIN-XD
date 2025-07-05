@@ -7,7 +7,7 @@ malvin({
   alias: ["wiki"],
   react: "📖",
   desc: "Fetch Wikipedia information and translate to English.",
-  category: "information",
+  category: "other",
   filename: __filename
 }, async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, reply }) => {
   try {

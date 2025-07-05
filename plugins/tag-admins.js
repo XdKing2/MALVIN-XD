@@ -1,52 +1,58 @@
-const config = require('../settings')
-const { malvin, commands } = require('../malvin')
-const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep, fetchJson} = require('../lib/functions')
+const config = require('../settings');
+const { malvin } = require('../malvin');
+const { getGroupAdmins } = require('../lib/functions');
 
 malvin({
     pattern: "tagadmins",
-    react: "👑",
     alias: ["gc_tagadmins"],
-    desc: "To Tag all Admins of the Group",
+    desc: "Mention all admins of the group",
     category: "group",
-    use: '.tagadmins [message]',
+    react: "👑",
+    use: ".tagadmins [message]",
     filename: __filename
-},
-async (conn, mek, m, { from, participants, reply, isGroup, senderNumber, groupAdmins, prefix, command, args, body }) => {
+}, 
+async (conn, mek, m, {
+    from, isGroup, senderNumber, participants, groupAdmins, body, command, reply
+}) => {
     try {
-        if (!isGroup) return reply("❌ This command can only be used in groups.");
-        
-        const botOwner = conn.user.id.split(":")[0]; // Extract bot owner's number
-        const senderJid = senderNumber + "@s.whatsapp.net";
+        if (!isGroup) return reply("❌ This command only works in group chats.");
 
-        // Ensure group metadata is fetched properly
-        let groupInfo = await conn.groupMetadata(from).catch(() => null);
+        const groupInfo = await conn.groupMetadata(from).catch(() => null);
         if (!groupInfo) return reply("❌ Failed to fetch group information.");
 
-        let groupName = groupInfo.subject || "Unknown Group";
-        let admins = await getGroupAdmins(participants);
-        let totalAdmins = admins ? admins.length : 0;
-        if (totalAdmins === 0) return reply("❌ No admins found in this group.");
+        const groupName = groupInfo.subject || "Unnamed Group";
+        const admins = await getGroupAdmins(participants);
 
-        let emojis = ['👑', '⚡', '🌟', '✨', '🎖️', '💎', '🔱', '🛡️', '🚀', '🏆'];
-        let randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-
-        // Proper message extraction
-        let message = body.slice(body.indexOf(command) + command.length).trim();
-        if (!message) message = "Attention Admins"; // Default message
-
-        let teks = `▢ Group : *${groupName}*\n▢ Admins : *${totalAdmins}*\n▢ Message: *${message}*\n\n┌───⊷ *ADMIN MENTIONS*\n`;
-
-        for (let admin of admins) {
-            if (!admin) continue; // Prevent undefined errors
-            teks += `${randomEmoji} @${admin.split('@')[0]}\n`;
+        if (!admins || admins.length === 0) {
+            return reply("❌ No admins found in this group.");
         }
 
-        teks += "└──✪ MALVIN ┃ XD ✪──";
+        const emojis = ['👑', '⚡', '🌟', '✨', '🎖️', '💎', '🔱', '🛡️', '🚀', '🏆'];
+        const chosenEmoji = emojis[Math.floor(Math.random() * emojis.length)];
 
-        conn.sendMessage(from, { text: teks, mentions: admins }, { quoted: mek });
+        const messageText = body
+            .replace(new RegExp(`^${config.PREFIX}${command}\\s*`, 'i'), '')
+            .trim() || "Attention Admins ⚠️";
+
+        let teks = `📢 *Admin Tag Alert*\n`;
+        teks += `🏷️ *Group:* ${groupName}\n`;
+        teks += `👥 *Admins:* ${admins.length}\n`;
+        teks += `💬 *Message:* ${messageText}\n\n`;
+        teks += `┌──⊷ *Admin Mentions*\n`;
+
+        for (let admin of admins) {
+            teks += `${chosenEmoji} @${admin.split("@")[0]}\n`;
+        }
+
+        teks += `└────✦ *MALVIN ┃ XD* ✦────`;
+
+        await conn.sendMessage(from, {
+            text: teks,
+            mentions: admins
+        }, { quoted: mek });
 
     } catch (e) {
         console.error("TagAdmins Error:", e);
-        reply(`❌ *Error Occurred !!*\n\n${e.message || e}`);
+        reply(`❌ Error occurred:\n${e.message || e}`);
     }
 });

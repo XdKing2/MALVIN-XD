@@ -11,7 +11,7 @@ const { malvin } = require("../malvin");
 malvin({
     pattern: "bible",
     desc: "Fetch Bible verses by reference.",
-    category: "search",
+    category: "download",
     react: "📖",
     filename: __filename
 }, async (conn, mek, m, { args, reply }) => {

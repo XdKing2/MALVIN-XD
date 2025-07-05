@@ -4,7 +4,7 @@ const googleTTS = require('google-tts-api');
 malvin({
   pattern: "tts2",
   desc: "Convert text to speech with different voices.",
-  category: "fun",
+  category: "convert",
   react: "🔊",
   filename: __filename
 },
@@ -57,7 +57,7 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
 malvin({
   pattern: "tts3",
   desc: "Convert text to speech with different voices.",
-  category: "fun",
+  category: "convert",
   react: "🔊",
   filename: __filename
 },

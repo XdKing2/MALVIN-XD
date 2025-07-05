@@ -7,7 +7,7 @@ const ALIVE_IMG = "https://files.catbox.moe/v1rf80.jpg"; // Ensure this URL is v
 malvin({
     pattern: "help",
     desc: "Check if the bot is active.",
-    category: "info",
+    category: "main",
     react: "🕓",
     filename: __filename
 }, async (conn, mek, m, { reply, from }) => {
@@ -144,7 +144,7 @@ Absolutely! Let’s go through each section of the commands:
                     forwardingScore: 999,
                     isForwarded: true,
                     forwardedNewsletterMessageInfo: {
-                        newsletterJid: '120363398430045533@newsletter',
+                        newsletterJid: '120363402507750390@newsletter',
                         newsletterName: '𝐌𝐀𝐋𝐕𝐈𝐍 𝐀𝐋𝐈𝐕𝐄',
                         serverMessageId: 143
                     }

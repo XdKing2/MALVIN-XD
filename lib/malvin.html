@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MALVIN-XD | WHATSAPP BOT</title>
+
+    <!-- Metadata for SEO -->
+    <meta name="description" content="MALVIN-XD | WHATSAPP BOT">
+    <meta property="og:title" content="MALVIN-XD | WHATSAPP BOT">
+    <meta property="og:description" content="Hey Dude, Malvin-Xd is Active and Running">
+    <meta property="og:image" content="https://telegra.ph/file/c2a4d8d65722553da4c89.jpg">
+    <link rel="icon" href="https://telegra.ph/file/c2a4d8d65722553da4c89.jpg">
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #121212;
+            color: white;
+            font-family: Arial, sans-serif;
+            flex-direction: column;
+        }
+
+        .glow {
+            font-size: 2em;
+            color: #fff;
+            text-align: center;
+            animation: glowing 10s infinite;
+        }
+
+        @keyframes glowing {
+            0% { text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000, 0 0 50px #ff0000; }
+            20% { text-shadow: 0 0 10px #ff9900, 0 0 20px #ff9900, 0 0 30px #ff9900, 0 0 40px #ff9900, 0 0 50px #ff9900; }
+            40% { text-shadow: 0 0 10px #ffff00, 0 0 20px #ffff00, 0 0 30px #ffff00, 0 0 40px #ffff00, 0 0 50px #ffff00; }
+            60% { text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00, 0 0 50px #00ff00; }
+            80% { text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff, 0 0 40px #00ffff, 0 0 50px #00ffff; }
+            100% { text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000, 0 0 50px #ff0000; }
+        }
+
+        .developer {
+            font-size: 1.2em;
+            margin-top: 20px;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <div class="glow"> ᴍᴀʟᴠɪɴ-xᴅ 𝐂ᴏɴɴᴇᴄᴛᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ ! ✅️</div> </br>
+    <div class="current-info" id="Info">Loading...</div>
+    <div class="developer">Developed by Malvin King</div>
+</body>
+<script>
+    function updateInfo() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      const dayName = dayNames[now.getDay()];
+      const date = now.toLocaleDateString(); // Format date as MM/DD/YYYY
+
+      const timeString = `${hours}:${minutes}:${seconds}`;
+      const infoString = `Time: ${timeString} | Date: ${date} | Day: ${dayName}`;
+      document.getElementById('Info').textContent = infoString;
+    }
+
+    // Update info every second
+    setInterval(updateInfo, 1000);
+
+    // Initial call to set info immediately
+    updateInfo();
+</script>
+</html>

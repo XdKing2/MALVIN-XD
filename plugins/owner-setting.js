@@ -90,30 +90,41 @@ async (conn, mek, m, { from, isOwner, reply }) => {
 
 
 // delete 
-
 malvin({
-pattern: "delete",
-react: "❌",
-alias: ["del"],
-desc: "delete message",
-category: "group",
-use: '.del',
-filename: __filename
+    pattern: "delete",
+    alias: ["del"],
+    desc: "Delete replied message (works in group & private)",
+    category: "group",
+    use: ".del (as reply)",
+    react: "❌",
+    filename: __filename
 },
-async(conn, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants,  isItzcp, groupAdmins, isBotAdmins, isAdmins, reply}) => {
-if (!isOwner ||  !isAdmins) return;
-try{
-if (!m.quoted) return reply(mg.notextfordel);
-const key = {
+async (conn, mek, m, {
+    from, quoted, isGroup, isAdmins, isBotAdmins, isOwner, reply
+}) => {
+    try {
+        // Check if the user replied to a message
+        if (!m.quoted) return reply("⚠️ Please *reply* to the message you want to delete using `.del`");
+
+        // Group-specific admin checks
+        if (isGroup) {
+            if (!isOwner && !isAdmins) return reply("🚫 Only *group admins* can use this command in groups.");
+            if (!isBotAdmins) return reply("🤖 I need *admin rights* to delete messages in this group.");
+        }
+
+        // Build key for deletion
+        const key = {
             remoteJid: m.chat,
             fromMe: false,
             id: m.quoted.id,
             participant: m.quoted.sender
-        }
-        await conn.sendMessage(m.chat, { delete: key })
-} catch(e) {
-console.log(e);
-reply('successful..👨‍💻✅')
-} 
-})
+        };
 
+        // Delete the message
+        await conn.sendMessage(m.chat, { delete: key });
+
+    } catch (e) {
+        console.error("❌ Delete Error:", e);
+        reply("❌ Couldn't delete the message. It might be too old or already deleted.");
+    }
+});

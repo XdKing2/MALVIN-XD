@@ -19,7 +19,7 @@ malvin(
     pattern: 'vsticker',
     alias: ['gsticker', 'g2s', 'gs', 'v2s', 'vs',],
     desc: 'Convert GIF/Video to a sticker.',
-    category: 'sticker',
+    category: 'convert',
     use: '<reply media or URL>',
     filename: __filename,
   },

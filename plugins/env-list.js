@@ -1,6 +1,8 @@
 const config = require('../settings');
 const { malvin } = require('../malvin');
 const axios = require('axios');
+const fs = require('fs');
+
 
 /**
  * Helper function to check if a value is a "true" boolean state.
@@ -21,7 +23,6 @@ function generateSettingsList() {
         { name: 'Status Reply', key: 'AUTO_STATUS_REPLY', emoji: '💬' },
         { name: 'Auto Reply', key: 'AUTO_REPLY', emoji: '↩️' },
         { name: 'Auto Sticker', key: 'AUTO_STICKER', emoji: '🖼️' },
-        { name: 'Auto Voice', key: 'AUTO_VOICE', emoji: '🔊' },
         { name: 'Custom Reacts', key: 'CUSTOM_REACT', emoji: '👍' },
         { name: 'Auto React', key: 'AUTO_REACT', emoji: '💥' },
         { name: 'Delete Links', key: 'DELETE_LINKS', emoji: '🔗' },
@@ -50,11 +51,12 @@ malvin({
     try {
         // Generate the formatted settings message with emojis
         const settingsMessage = `
-╭━━━〔 *MALVIN-XD SETTINGS* 〕━━━┈⊷
-┃ *📌 Current Configurations:*
-┃──────────────────────
+╭─❍〔 *ᴍᴀʟᴠɪɴ xᴅ sᴇᴛᴛɪɴɢs* 〕❍─
+┊
+┆ *📌 ᴄᴜʀʀᴇɴᴛ ᴄᴏɴғɪɢᴇʀᴀᴛɪᴏɴs:*
+┆──────────────
 ${generateSettingsList()}
-╰━━━━━━━━━━━━━━━━━━━━┈⊷
+╰━━━━━━━━━━━━━┈⊷
 
 🔗 *Description:* ${config.DESCRIPTION || 'No description available'}
 
@@ -62,8 +64,7 @@ ${generateSettingsList()}
 
         // Image & Audio URLs (with fallbacks in case of missing values)
         const imageUrl = config.IMAGE_URL || 'https://files.catbox.moe/ebqp72.png';
-        const audioUrl = config.AUDIO_URL || 'https://github.com/kingmalvin40/MALVIN-DATA/raw/refs/heads/main/autovoice/menu.m4a';
-
+       
         // Send settings message with an image
         await conn.sendMessage(from, {
             image: { url: imageUrl },
@@ -73,16 +74,17 @@ ${generateSettingsList()}
                 forwardingScore: 999,
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
-                    newsletterJid: '120363398430045533@newsletter',
-                    newsletterName: "Malvin King",
+                    newsletterJid: '120363402507750390@newsletter',
+                    newsletterName: "ᴍᴀʟᴠɪɴ xᴅ ᴇɴᴠ",
                     serverMessageId: 143
                 }
             }
         }, { quoted: mek });
 
         // Send an audio response (PTT Voice Message)
+        
         await conn.sendMessage(from, {
-            audio: { url: audioUrl },
+            audio: fs.readFileSync('./autos/intro.m4a'),
             mimetype: 'audio/mp4',
             ptt: true
         }, { quoted: mek });

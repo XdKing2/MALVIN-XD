@@ -7,87 +7,92 @@ const { runtime } = require('../lib/functions');
 
 malvin({
   pattern: 'version',
-  alias: ["changelog", "cupdate", "checkupdate"],
+  alias: ['changelog', 'cupdate', 'checkupdate'],
   react: '🚀',
-  desc: "Check bot's version, system stats, and update info.",
-  category: 'info',
+  desc: 'Check bot version, system info, and update status.',
+  category: 'owner',
   filename: __filename
-}, async (conn, mek, m, {
-  from, sender, pushname, reply
-}) => {
+}, async (conn, mek, m, { from, pushname, reply }) => {
   try {
-    // Read local version data
-    const localVersionPath = path.join(__dirname, '../data/version.json');
+    // Local version data
+    const versionPath = path.join(__dirname, '../data/version.json');
     let localVersion = 'Unknown';
-    let changelog = 'No changelog available.';
-    if (fs.existsSync(localVersionPath)) {
-      const localData = JSON.parse(fs.readFileSync(localVersionPath));
-      localVersion = localData.version;
-      changelog = localData.changelog;
+    let changelog = 'No changelog found.';
+    if (fs.existsSync(versionPath)) {
+      const data = JSON.parse(fs.readFileSync(versionPath));
+      localVersion = data.version;
+      changelog = data.changelog || changelog;
     }
 
-    // Fetch latest version data from GitHub
-    const rawVersionUrl = 'https://raw.githubusercontent.com/XdKing2/MALVIN-XD/main/data/version.json';
+    // Remote version data
+    const repoRawURL = 'https://raw.githubusercontent.com/XdKing2/MALVIN-XD/main/data/version.json';
     let latestVersion = 'Unknown';
-    let latestChangelog = 'No changelog available.';
+    let latestChangelog = 'Not available';
     try {
-      const { data } = await axios.get(rawVersionUrl);
-      latestVersion = data.version;
-      latestChangelog = data.changelog;
-    } catch (error) {
-      console.error('Failed to fetch latest version:', error);
+      const { data } = await axios.get(repoRawURL);
+      latestVersion = data.version || latestVersion;
+      latestChangelog = data.changelog || latestChangelog;
+    } catch (err) {
+      console.warn('🔸 Could not fetch latest version info.');
     }
 
-    // Count total plugins
-    const pluginPath = path.join(__dirname, '../plugins');
-    const pluginCount = fs.readdirSync(pluginPath).filter(file => file.endsWith('.js')).length;
-
-    // Count total registered commands
-    const totalCommands = commands.length;
-
-    // System info
+    // Stats
+    const pluginCount = fs.readdirSync(path.join(__dirname, '../plugins')).filter(f => f.endsWith('.js')).length;
+    const commandCount = commands.length;
     const uptime = runtime(process.uptime());
-    const ramUsage = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2);
-    const totalRam = (os.totalmem() / 1024 / 1024).toFixed(2);
-    const hostName = os.hostname();
-    const lastUpdate = fs.statSync(localVersionPath).mtime.toLocaleString();
+    const ram = process.memoryUsage().heapUsed / 1024 / 1024;
+    const totalRam = os.totalmem() / 1024 / 1024;
+    const hostname = os.hostname();
+    const lastUpdated = fs.statSync(versionPath).mtime.toLocaleString();
 
-    // GitHub stats
-    const githubRepo = 'https://github.com/XdKing2/MALVIN-XD';
+    const updateStatus = localVersion !== latestVersion
+      ? `🔄 *Update Available!*\n👉 *Current:* ${localVersion}\n👉 *Latest:* ${latestVersion}\n\nUse *.update* to upgrade.`
+      : `✅ Your MALVIN-XD bot is up-to-date!`;
 
-    // Check update status
-    let updateMessage = `✅ Your MALVIN-XD bot is up-to-date!`;
-    if (localVersion !== latestVersion) {
-      updateMessage = `🚀 Your MALVIN-XD bot is outdated!
-🔹 *Current Version:* ${localVersion}
-🔹 *Latest Version:* ${latestVersion}
+    const caption = `
+╭──〔 *MALVIN-XD STATUS* 〕─
 
-Use *.update* to update.`;
-    }
+🧑‍💻 ᴜsᴇʀ: *${pushname}*
+📍 ʜᴏsᴛ: *${hostname}*
+🕒 ᴜᴘᴛɪᴍᴇ: *${uptime}*
 
-    const statusMessage = `🌟 *Good ${new Date().getHours() < 12 ? 'Morning' : 'Night'}, ${pushname}!* 🌟\n\n` +
-      `📌 *Bot Name:* MALVIN-XD\n🔖 *Current Version:* ${localVersion}\n📢 *Latest Version:* ${latestVersion}\n📂 *Total Plugins:* ${pluginCount}\n🔢 *Total Commands:* ${totalCommands}\n\n` +
-      `💾 *System Info:*\n⏳ *Uptime:* ${uptime}\n📟 *RAM Usage:* ${ramUsage}MB / ${totalRam}MB\n⚙️ *Host Name:* ${hostName}\n📅 *Last Update:* ${lastUpdate}\n\n` +
-      `📝 *Changelog:*\n${latestChangelog}\n\n` +
-      `⭐ *GitHub Repo:* ${githubRepo}\n👤 *Owner:* [Malvin King](https://github.com/XdKing2)\n\n${updateMessage}\n\n🚀 *Hey! Don't forget to fork & star the repo!*`;
+╭─💾 *Sʏsᴛᴇᴍ* ─
+├ RAM: *${ram.toFixed(2)}MB / ${totalRam.toFixed(2)}MB*
+├ Pʟᴜɢɪɴs: *${pluginCount}*
+├ Cᴏᴍᴍᴀɴᴅs: *${commandCount}*
+╰─────────
 
-    // Send the status message with an image
+╭─📦 *Vᴇʀsɪᴏɴs* ─
+├📍 Lᴏᴄᴀʟ: *${localVersion}*
+├🆕️ Lᴀᴛᴇsᴛ: *${latestVersion}*
+╰──────────
+
+📅 *Last Local Update:* ${lastUpdated}
+📜 *Changelog:* ${latestChangelog}
+
+📎 *Repo:* https://github.com/XdKing2/MALVIN-XD
+👑 *Owner:* https://github.com/XdKing2
+
+${updateStatus}
+`.trim();
+
     await conn.sendMessage(from, {
-      image: { url: 'https://files.catbox.moe/e463lh' },
-      caption: statusMessage,
+      image: { url: 'https://files.catbox.moe/01f9y1.jpg' },
+      caption,
       contextInfo: {
         mentionedJid: [m.sender],
         forwardingScore: 999,
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
-          newsletterJid: '120363398430045533@newsletter',
+          newsletterJid: '120363402507750390@newsletter',
           newsletterName: 'Malvin King',
           serverMessageId: 143
         }
       }
     }, { quoted: mek });
+
   } catch (error) {
-    console.error('Error fetching version info:', error);
-    reply('❌ An error occurred while checking the bot version.');
+    console.error('Version error:', error);
+    reply('❌ Error while checking version info.');
   }
 });

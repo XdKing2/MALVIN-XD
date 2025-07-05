@@ -4,7 +4,7 @@ const { malvin } = require('../malvin');
 malvin({
     pattern: "movie",
     desc: "Fetch detailed information about a movie.",
-    category: "utility",
+    category: "download",
     react: "🎬",
     filename: __filename
 },
@@ -62,7 +62,7 @@ async (conn, mek, m, { from, reply, sender, args }) => {
                     forwardingScore: 999,
                     isForwarded: true,
                     forwardedNewsletterMessageInfo: {
-                        newsletterJid: '120363398430045533@newsletter',
+                        newsletterJid: '120363402507750390@newsletter',
                         newsletterName: 'ᴍᴀʟᴠɪɴ-xᴅ',
                         serverMessageId: 143
                     }

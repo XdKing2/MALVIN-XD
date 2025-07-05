@@ -4,6 +4,7 @@ const { malvin, commands } = require('../malvin');
 
 malvin({
     pattern: "githubstalk",
+    alias: ["gstalk", "gitstalk", "gits"],
     desc: "Fetch detailed GitHub user profile including profile picture.",
     category: "main",
     react: "🖥️",

@@ -5,7 +5,7 @@ malvin({
     pattern: "antidelete",
     alias: ['antidel', 'del'],
     desc: "Toggle anti-delete feature",
-    category: "misc",
+    category: "settings",
     filename: __filename
 },
 async (conn, mek, m, { from, reply, text, isCreator }) => {

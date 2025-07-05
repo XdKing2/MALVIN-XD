@@ -1,56 +1,67 @@
-const config = require('../settings')
-const { malvin, commands } = require('../malvin')
-const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep, fetchJson} = require('../lib/functions')
+// MALVIN-XD Plugin | tagall.js
+
+const config = require('../settings');
+const { malvin } = require('../malvin');
+const { getGroupAdmins } = require('../lib/functions');
 
 malvin({
-    pattern: "tagall",
-    react: "🔊",
-    alias: ["gc_tagall"],
-    desc: "To Tag all Members",
-    category: "group",
-    use: '.tagall [message]',
-    filename: __filename
+  pattern: "tagall",
+  alias: ["gc_tagall"],
+  desc: "Tag all group members with a custom or default message.",
+  category: "group",
+  use: ".tagall [message]",
+  react: "📣",
+  filename: __filename,
 },
-async (conn, mek, m, { from, participants, reply, isGroup, senderNumber, groupAdmins, prefix, command, args, body }) => {
-    try {
-        if (!isGroup) return reply("❌ This command can only be used in groups.");
-        
-        const botOwner = conn.user.id.split(":")[0]; // Extract bot owner's number
-        const senderJid = senderNumber + "@s.whatsapp.net";
+async (conn, mek, m, {
+  from, isGroup, senderNumber, participants, reply, command, body, groupAdmins
+}) => {
+  try {
+    if (!isGroup) return reply("❌ This command is only for groups.");
 
-        if (!groupAdmins.includes(senderJid) && senderNumber !== botOwner) {
-            return reply("❌ Only group admins or the bot owner can use this command.");
-        }
+    const senderJid = m.sender;
+const botOwner = conn.user.id.split(":")[0] + "@s.whatsapp.net";
 
-        // Ensure group metadata is fetched properly
-        let groupInfo = await conn.groupMetadata(from).catch(() => null);
-        if (!groupInfo) return reply("❌ Failed to fetch group information.");
+if (!groupAdmins.includes(senderJid) && senderJid !== botOwner) {
+  return reply("🚫 *Only group admins or the bot owner can use this command.*");
+}
 
-        let groupName = groupInfo.subject || "Unknown Group";
-        let totalMembers = participants ? participants.length : 0;
-        if (totalMembers === 0) return reply("❌ No members found in this group.");
 
-        let emojis = ['📢', '🔊', '🌐', '🔰', '❤‍🩹', '🤍', '🖤', '🩵', '📝', '💗', '🔖', '🪩', '📦', '🎉', '🛡️', '💸', '⏳', '🗿', '🚀', '🎧', '🪀', '⚡', '🚩', '🍁', '🗣️', '👻', '⚠️', '🔥'];
-        let randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+    const metadata = await conn.groupMetadata(from).catch(() => null);
+    if (!metadata) return reply("❌ Failed to retrieve group information.");
 
-        // Proper message extraction
-        let message = body.slice(body.indexOf(command) + command.length).trim();
-        if (!message) message = "Attention Everyone"; // Default message
+    const groupName = metadata.subject || "Group";
+    const totalMembers = participants?.length || 0;
+    if (!totalMembers) return reply("❌ No members found to tag.");
 
-        let teks = `▢ Group : *${groupName}*\n▢ Members : *${totalMembers}*\n▢ Message: *${message}*\n\n┌───⊷ *MENTIONS*\n`;
+    const emojis = ['📢', '🔊', '🌐', '🔰', '💬', '🛡️', '🎉', '🚀', '🔥', '🪩', '🎧', '📦', '📣', '⚡'];
+    const emoji = emojis[Math.floor(Math.random() * emojis.length)];
 
-        for (let mem of participants) {
-            if (!mem.id) continue; // Prevent undefined errors
-            teks += `${randomEmoji} @${mem.id.split('@')[0]}\n`;
-        }
+    const msg = body.slice(body.indexOf(command) + command.length).trim() || "Hello everyone!";
 
-        teks += "└──✪ MALVIN ┃ XD ✪──";
+    let text = `╭───❖ *Group Broadcast* ❖───⬣
+│ 🏷️ *Group*: ${groupName}
+│ 👥 *Members*: ${totalMembers}
+│ 💬 *Message*: ${msg}
+╰────────────⬣
 
-        conn.sendMessage(from, { text: teks, mentions: participants.map(a => a.id) }, { quoted: mek });
+┌─⟪ *Tagged Members* ⟫\n`;
 
-    } catch (e) {
-        console.error("TagAll Error:", e);
-        reply(`❌ *Error Occurred !!*\n\n${e.message || e}`);
+    for (const member of participants) {
+      if (member?.id) {
+        text += `${emoji} @${member.id.split("@")[0]}\n`;
+      }
     }
-});
 
+    text += "└──✪ *MALVIN-XD BOT* ✪──";
+
+    await conn.sendMessage(from, {
+      text: text,
+      mentions: participants.map(u => u.id)
+    }, { quoted: mek });
+
+  } catch (err) {
+    console.error("TagAll Error:", err);
+    reply(`❌ *Something went wrong:* ${err.message || err}`);
+  }
+});

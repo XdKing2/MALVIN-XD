@@ -19,7 +19,7 @@ malvin({
   alias: ["removebg"],
   react: '📸',
   desc: "Scan and remove bg from images",
-  category: "img_edit",
+  category: "convert",
   use: ".rmbg [reply to image]",
   filename: __filename
 }, async (conn, message, m,  { reply, mek }) => {

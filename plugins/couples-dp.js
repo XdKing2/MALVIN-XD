@@ -6,7 +6,7 @@ malvin({
   'alias': ["couple", "cpp"],
   'react': '💑',
   'desc': "Get a male and female couple profile picture.",
-  'category': "image",
+  'category': "fun",
   'use': ".couplepp",
   'filename': __filename
 }, async (conn, m, store, {
