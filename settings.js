@@ -6,7 +6,7 @@ function convertToBool(text, fault = 'true') {
     return text === fault ? true : false;
 }
 module.exports = {
-SESSION_ID: process.env.SESSION_ID || "",
+SESSION_ID: process.env.SESSION_ID || "malvin~Yu8GkZaA#aGUNShF5P8hpg5aa9vfNXLvJVDxBhnTWPwSAdcFCeEQ",
 // add your Session Id make sure it starts with malvin~
 PREFIX: process.env.PREFIX || ".",
 // add your prifix for bot   
@@ -27,7 +27,7 @@ LINK_WHITELIST: "youtube.com,github.com",
         AUTO_STATUS_REPLY: process.env.AUTO_STATUS_REPLY || "false",
 // make true if you want auto reply on status 
 
-        AUTO_STATUS_REACT: process.env.AUTO_STATUS_REACT || "true",
+        AUTO_STATUS_REACT: process.env.AUTO_STATUS_REACT || "false",
 // make true if you want auto reply on status 
 
         AUTO_STATUS_MSG: process.env.AUTO_STATUS_MSG || "*Just seen ur status 😆*",
@@ -40,7 +40,7 @@ LINK_WHITELIST: "youtube.com,github.com",
        ADMIN_EVENTS: process.env.ADMIN_EVENTS || "false",
 // make true to know who dismiss or promoted a member in group
 
-      ANTI_LINK: process.env.ANTI_LINK || "true",
+      ANTI_LINK: process.env.ANTI_LINK || "false",
 // make anti link true,false for groups 
 
       MENTION_REPLY: process.env.MENTION_REPLY || "false",
