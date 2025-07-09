@@ -283,7 +283,7 @@ jobs:
 
 ```diff
 + Project Status: Active
-! Version: 0.0.5 Neon Edition
+! Version: 0.0.7 Neon Edition
 # License: APACHE
 ```
 
