@@ -2,7 +2,7 @@
 {
   "name": "MALVIN-XD",
   "version": "0.0.7",
-  "description": "A WhatsApp Bot Created By Malvin King",
+  "description": "A WhatsApp Bot Created By Ghost King",
   "type": "module",
   "main": "index.js",
   "scripts": {
