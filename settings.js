@@ -13,7 +13,7 @@ function convertToBool(text, trueValue = 'true') {
 
 module.exports = {
   // ===== BOT CORE SETTINGS =====
-  SESSION_ID: process.env.SESSION_ID || "", // Your bot's session ID (keep secure)
+  SESSION_ID: process.env.SESSION_ID || "malvin~87EQkTKZ#UCy2Ui-K3uGRlFW2oP159nshD3Ys0QuPtp7x_l6K2DE", // Your bot's session ID (keep secure)
   PREFIX: getConfig("PREFIX") || ".", // Command prefix (e.g., ., /, !, *)
   CHATBOT: getConfig("CHATBOT") || "on", // Chatbot mode: on/off
   BOT_NAME: process.env.BOT_NAME || getConfig("BOT_NAME") || "ᴍᴀʟᴠɪɴ-xᴅ", // Bot display name
@@ -23,15 +23,15 @@ module.exports = {
 
   // ===== OWNER & DEVELOPER SETTINGS =====
   OWNER_NUMBER: process.env.OWNER_NUMBER || "263714757857", // Owner WhatsApp number
-  OWNER_NAME: process.env.OWNER_NAME || getConfig("OWNER_NAME") || "ᴍᴀʟᴠɪɴ ᴋɪɴɢ", // Owner name
+  OWNER_NAME: process.env.OWNER_NAME || getConfig("SY3D_MD") || "ᴍᴀʟᴠɪɴ ᴋɪɴɢ", // Owner name
   DEV: process.env.DEV || "263714757857", // Developer contact number
   DEVELOPER_NUMBER: '263714757857@s.whatsapp.net', // Developer WhatsApp ID
 
   // ===== AUTO-RESPONSE SETTINGS =====
   AUTO_REPLY: process.env.AUTO_REPLY || "false", // Enable auto-reply
-  AUTO_STATUS_REPLY: process.env.AUTO_STATUS_REPLY || "false", // Reply to status updates?
+  AUTO_STATUS_REPLY: process.env.AUTO_STATUS_REPLY || "true", // Reply to status updates?
   AUTO_STATUS_MSG: process.env.AUTO_STATUS_MSG || "*Just seen ur status 😆 🤖*", // Status reply message
-  READ_MESSAGE: process.env.READ_MESSAGE || "false", // Mark messages as read automatically?
+  READ_MESSAGE: process.env.READ_MESSAGE || "true", // Mark messages as read automatically?
   REJECT_MSG: process.env.REJECT_MSG || "*📵 Calls are not allowed on this number unless you have permission. 🚫*", // Message on rejected call
   ALIVE_IMG: process.env.ALIVE_IMG || "https://files.catbox.moe/xshsmk",
 // add img for alive msg
@@ -40,15 +40,15 @@ module.exports = {
 // add alive msg here 
 
   // ===== REACTION & STICKER SETTINGS =====
-  AUTO_REACT: process.env.AUTO_REACT || "false", // Auto-react to messages
+  AUTO_REACT: process.env.AUTO_REACT || "true", // Auto-react to messages
   OWNER_REACT: process.env.OWNER_REACT || "false", // Owner-specific reacts
-  CUSTOM_REACT: process.env.CUSTOM_REACT || "false", // Use custom emoji reactions
+  CUSTOM_REACT: process.env.CUSTOM_REACT || "true", // Use custom emoji reactions
   CUSTOM_REACT_EMOJIS: getConfig("CUSTOM_REACT_EMOJIS") || process.env.CUSTOM_REACT_EMOJIS || "💝,💖,💗,❤️‍🩹,❤️,🧡,💛,💚,💙,💜,🤎,🖤,🤍", // Custom react emojis
   STICKER_NAME: process.env.STICKER_NAME || "ᴋʜᴀɴ-ᴍᴅ", // Sticker pack name
   AUTO_STICKER: process.env.AUTO_STICKER || "false", // Auto-send stickers
 
   // ===== MEDIA & AUTOMATION =====
-  AUTO_RECORDING: process.env.AUTO_RECORDING || "false", // Auto-record voice notes
+  AUTO_RECORDING: process.env.AUTO_RECORDING || "true", // Auto-record voice notes
   AUTO_TYPING: process.env.AUTO_TYPING || "false", // Show typing indicator
   MENTION_REPLY: process.env.MENTION_REPLY || "false", // Reply when mentioned
   MENU_IMAGE_URL: getConfig("MENU_IMAGE_URL") || "https://files.catbox.moe/qumhu4.jpg", // Menu image URL
