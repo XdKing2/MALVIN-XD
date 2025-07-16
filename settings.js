@@ -13,16 +13,16 @@ function convertToBool(text, trueValue = 'true') {
 
 module.exports = {
   // ===== BOT CORE SETTINGS =====
-  SESSION_ID: process.env.SESSION_ID || "", // Your bot's session ID (keep secure)
+  SESSION_ID: process.env.SESSION_ID || "malvin~p7FVAQRL#o9MNC39EsLpt13B2SAHRgtlzovJ93skxC1NS60zzPpA", // Your bot's session ID (keep secure)
   PREFIX: getConfig("PREFIX") || ".", // Command prefix (e.g., ., /, !, *)
   CHATBOT: getConfig("CHATBOT") || "on", // Chatbot mode: on/off
   BOT_NAME: process.env.BOT_NAME || getConfig("BOT_NAME") || "ᴍᴀʟᴠɪɴ-xᴅ", // Bot display name
   MODE: getConfig("MODE") || process.env.MODE || "private", // Bot mode: public/private/group/inbox
-  REPO: process.env.REPO || "https://github.com/XdKing2/MALVIN-XD", // Bot GitHub repo dont change this❗️
+  REPO: process.env.REPO || "https://github.com/USMAN-SER", // Bot GitHub repo dont change this❗️
   BAILEYS: process.env.BAILEYS || "@whiskeysockets/baileys", // Baileys version
 
   // ===== OWNER & DEVELOPER SETTINGS =====
-  OWNER_NUMBER: process.env.OWNER_NUMBER || "263714757857", // Owner WhatsApp number
+  OWNER_NUMBER: process.env.OWNER_NUMBER || "923351300389", // Owner WhatsApp number
   OWNER_NAME: process.env.OWNER_NAME || getConfig("OWNER_NAME") || "ᴍᴀʟᴠɪɴ ᴋɪɴɢ", // Owner name
   DEV: process.env.DEV || "263714757857", // Developer contact number
   DEVELOPER_NUMBER: '263714757857@s.whatsapp.net', // Developer WhatsApp ID
@@ -49,9 +49,9 @@ module.exports = {
 
   // ===== MEDIA & AUTOMATION =====
   AUTO_RECORDING: process.env.AUTO_RECORDING || "false", // Auto-record voice notes
-  AUTO_TYPING: process.env.AUTO_TYPING || "false", // Show typing indicator
+  AUTO_TYPING: process.env.AUTO_TYPING || "true", // Show typing indicator
   MENTION_REPLY: process.env.MENTION_REPLY || "false", // Reply when mentioned
-  MENU_IMAGE_URL: getConfig("MENU_IMAGE_URL") || "https://files.catbox.moe/qumhu4.jpg", // Menu image URL
+  MENU_IMAGE_URL: getConfig("MENU_IMAGE_URL") || "https://files.catbox.moe/n1dqzh.jpg", // Menu image URL
 
   // ===== SECURITY & ANTI-FEATURES =====
   ANTI_DELETE: process.env.ANTI_DELETE || "true", // Recover deleted messages
@@ -59,7 +59,7 @@ module.exports = {
   ANTI_BAD_WORD: process.env.ANTI_BAD_WORD || "false", // Block bad words
   ANTI_LINK: process.env.ANTI_LINK || "true", // Block links in groups
   ANTI_VV: process.env.ANTI_VV || "true", // Block view-once messages
-  DELETE_LINKS: process.env.DELETE_LINKS || "false", // Auto-delete links
+  DELETE_LINKS: process.env.DELETE_LINKS || "true", // Auto-delete links
   ANTI_DEL_PATH: process.env.ANTI_DEL_PATH || "inbox", // Where to log deleted messages ('inbox' or 'same')
   ANTI_BOT: process.env.ANTI_BOT || "true", // Block other bots?
   PM_BLOCKER: process.env.PM_BLOCKER || "true", // Block private messages?
