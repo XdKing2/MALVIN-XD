@@ -1,5 +1,5 @@
 {
-  "name": "ᴍᴀʟᴠɪɴ-xᴅ",
+  "name": "255623694611ᴠɪɴ-xᴅ",
   "description": "Javascript WhatsApp bot made by ᴍᴀʟᴠɪɴ ᴋɪɴɢ",
   "logo": "https://files.catbox.moe/qumhu4.jpg",
   "keywords": ["MALVIN XD"],
@@ -10,7 +10,7 @@
       "SESSION_ID": {
         "description": "Put your SESSION_ID here. Make sure it starts with malvin~",
         "value":"",
-        "required": true
+        "required": false
         
     },
       "BOT_NAME": {
@@ -34,7 +34,7 @@
      "DESCRIPTION": {
       "description": "add caption for menu and other",
       "value": "> *© ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʟᴠɪɴ xᴅ*",
-      "required": true
+      "required": false
       
    }, 
 
