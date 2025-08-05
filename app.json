@@ -1,50 +1,50 @@
 {
-  "name": "ᴍᴀʟᴠɪɴ-xᴅ",
+  "name": "𝕄𝕆𝔹ˣᵈ",
   "description": "Javascript WhatsApp bot made by ᴍᴀʟᴠɪɴ ᴋɪɴɢ",
   "logo": "https://files.catbox.moe/qumhu4.jpg",
-  "keywords": ["MALVIN XD"],
+  "keywords": ["𝕄𝕆𝔹ˣᵈ"],
   "success_url": "/",
 
     "stack": "container",
   "env": {
-      "SESSION_ID": {
-        "description": "Put your SESSION_ID here. Make sure it starts with malvin~",
+      "SESSION_ID": {malvin~IjMVkQzD#xrVoAQCTw8hmFYvq5JeT2i-zKBIzVfSFM5sauvOm3sM}
+        "description": 
         "value":"",
         "required": true
         
     },
-      "BOT_NAME": {
+      "BOT_NAME": {𝕄𝕆𝔹ˣᵈ}
         "description": "write here your bot name.",
         "required": true,
         "value": "ᴍᴀʟᴠɪɴ xᴅ" 
         
     },
-     "PREFIX": {
+     "PREFIX": {+}
        "description": "Bot command prefix, (e.g, . , ! @ etc",
       "value": "."
       "required": true,
       
     },
-      "MODE": {
+      "MODE": {private}
         "description": "Bot mode can be public, private, inbox or groups in small letters (e.g, public)",
         "value":"private",
         "required": true  
         
    },
-     "DESCRIPTION": {
+     "DESCRIPTION": {Moving ahead of time}
       "description": "add caption for menu and other",
       "value": "> *© ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʟᴠɪɴ xᴅ*",
       "required": true
       
    }, 
 
-    "OWNER_NUMBER": {
+    "OWNER_NUMBER": {2348124051534}
       "description": "put the owner number for bot.",
       "value": "263714757857"
       "required": true
       
    },
-    "OWNER_NAME": {
+    "OWNER_NAME": {MOB}
       "description": "Enter your name here",
       "value": "",
       "required": true
