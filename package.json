@@ -4,7 +4,7 @@
   "description": "Automated whatsapp md bot created using nodejs and baileys lib",
   "main": "index.js",
   "type": "module",
-  "scripts": {
+  "scripts": {malvin~E3twTALS#SjjWM40jnXG6KWQD_o1yjG5WG5vsKbXasdT3krYcCO8
     "start": "pm2 start index.js --deep-monitoring --attach --name MALVIN-XD",
     "stop": "pm2 stop MALVIN-XD",
     "restart": "pm2 restart MALVIN-XD"
