@@ -9,7 +9,7 @@
   "env": {
       "SESSION_ID": {
         "description": "Put your SESSION_ID here. Make sure it starts with malvin~",
-        "value":"",
+        "value":"malvin~ty8A0DyT#7ps65OayKzetxyNgWRAaSGX2sYG_NMbRtb6A_bSlC9A",
         "required": true
         
     },
@@ -21,7 +21,7 @@
     },
      "PREFIX": {
        "description": "Bot command prefix, (e.g, . , ! @ etc",
-      "value": "."
+      "value": "!"
       "required": true,
       
     },
@@ -40,7 +40,7 @@
 
     "OWNER_NUMBER": {
       "description": "put the owner number for bot.",
-      "value": "263714757857"
+      "value": "50943472523"
       "required": true
       
    },
