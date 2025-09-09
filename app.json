@@ -8,13 +8,13 @@
     "stack": "container",
   "env": {
       "SESSION_ID": {
-        "description": "Put your SESSION_ID here. Make sure it starts with malvin~",
+        "description": "malvin~dz10nY4C#gzf8M7P_8OrKuqN4Td-BPKUcDFFLUp_mPUTBKZSbzGs",
         "value":"",
         "required": true
         
     },
       "BOT_NAME": {
-        "description": "write here your bot name.",
+        "description": "BALOCH.",
         "required": true,
         "value": "ᴍᴀʟᴠɪɴ xᴅ" 
         
@@ -27,7 +27,7 @@
     },
       "MODE": {
         "description": "Bot mode can be public, private, inbox or groups in small letters (e.g, public)",
-        "value":"private",
+        "value":"Public",
         "required": true  
         
    },
@@ -45,7 +45,7 @@
       
    },
     "OWNER_NAME": {
-      "description": "Enter your name here",
+      "description": "Baloch-khan",
       "value": "",
       "required": true
     }
