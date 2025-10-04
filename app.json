@@ -1,8 +1,8 @@
 {
-  "name": "ᴍᴀʟᴠɪɴ-xᴅ",
+  "name": "gaiya",
   "description": "Javascript WhatsApp bot made by ᴍᴀʟᴠɪɴ ᴋɪɴɢ",
-  "logo": "https://files.catbox.moe/qumhu4.jpg",
-  "keywords": ["MALVIN XD"],
+  "logo": "https://raw.githubusercontent.com/gayanmadura/Bot-photo-set/refs/heads/main/06ef0f081801ec043c456380e7b013c5.jpg",
+  "keywords": ["gaiya XD"],
   "success_url": "/",
 
     "stack": "container",
@@ -40,7 +40,7 @@
 
     "OWNER_NUMBER": {
       "description": "put the owner number for bot.",
-      "value": "263714757857"
+      "value": "94789402259"
       "required": true
       
    },
@@ -54,7 +54,7 @@
 
      "buildpacks": [
         {
-            "url": "https://github.com/heroku/heroku-buildpack-nodejs.git"
+            "url": "https://raw.githubusercontent.com/gayanmadura/Bot-photo-set/refs/heads/main/06ef0f081801ec043c456380e7b013c5.jpg"
         }
      ],
   "stack": "heroku-24"
