@@ -1,6 +1,6 @@
 
 {
-"bot-name": "MALVIN-XD",
+"bot-name": "KHALEEFAH BOT",
   "description": "ᴊᴀᴠᴀsᴄʀɪᴘᴛ ᴡʜᴀᴛsᴀᴘᴘ ʙᴏᴛ ᴄʀᴇᴀᴛᴇᴅ ʙʏ ᴍᴀʟᴠɪɴ ᴋɪɴɢ",
   "logo": "https://files.catbox.moe/juxfce.jpg",
   "keywords": ["bot"],
@@ -8,7 +8,7 @@
     "owner-verification":"malvink003@gmail.com",
   
     "env": {
-      "SESSION_ID": {
+      "SESSION_ID": {malvin~1vsFAR6L#C39bek6XdrU_py_6zaFknlcN4Ec8Ucz7ktWSHmVPuqM
         "description": "Put your SESSION_ID here. It starts with malvin~",
         "value":"",
         "required": true
