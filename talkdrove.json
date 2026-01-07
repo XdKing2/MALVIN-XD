@@ -9,20 +9,20 @@
   
     "env": {
       "SESSION_ID": {
-        "description": "Put your SESSION_ID here. It starts with malvin~",
+        "description": "malvin~K0RUHDoQ#oqkT9ZEcIrFE83AtXx94VYtcu31ZQoOjZ_WaXUASryY3dce3209f186946a",
         "value":"",
         "required": true
         
       },
       
     "OWNER_NUMBER": {
-      "description": "Enter owner number",
+      "description": "201129925634",
       "required": true,
       "value": "263714757857"
       
        },
       "TIMEZONE": {
-      "description": "Enter country timezone",
+      "description": "Egypt",
       "required": true,
       "value": "Africa/Harare"
 
