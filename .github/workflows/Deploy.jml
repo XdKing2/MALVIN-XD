@@ -1,0 +1,68 @@
+// index.js - simple webhook + send reply using WhatsApp Cloud API
+const express = require('express');
+const fetch = require('node-fetch'); // or global fetch in Node 18+
+const bodyParser = require('body-parser');
+
+const APP_PORT = process.env.PORT || 3000;
+const VERIFY_TOKEN = process.env.WH_VERIFY_TOKEN || 'my_verify_token';
+const WA_TOKEN = process.env.WH_ACCESS_TOKEN || '<YOUR_TEMP_TOKEN>';
+const PHONE_NUMBER_ID = process.env.WH_PHONE_NUMBER_ID || '<PHONE_NUMBER_ID>';
+const API_VERSION = process.env.WH_API_VERSION || 'v16.0'; // keep in sync with Meta docs
+
+const app = express();
+app.use(bodyParser.json());
+
+// webhook verification (GET)
+app.get('/webhook', (req, res) => {
+  const mode = req.query['hub.mode'];
+  const token = req.query['hub.verify_token'];
+  const challenge = req.query['hub.challenge'];
+  if (mode === 'subscribe' && token === VERIFY_TOKEN) {
+    return res.status(200).send(challenge);
+  }
+  res.sendStatus(403);
+});
+
+// webhook receiver (POST)
+app.post('/webhook', async (req, res) => {
+  // quick ack to Meta
+  res.sendStatus(200);
+
+  try {
+    const entry = req.body?.entry?.[0];
+    if (!entry) return;
+    const changes = entry?.changes?.[0];
+    const messages = changes?.value?.messages;
+    if (!messages || messages.length === 0) return;
+
+    const msg = messages[0];
+    const from = msg.from; // sender phone
+    const text = msg.text?.body || '';
+
+    console.log('Message from', from, text);
+
+    // simple auto-reply
+    const payload = {
+      messaging_product: "whatsapp",
+      to: from,
+      text: { body: `You said: ${text}` }
+    };
+
+    const url = `https://graph.facebook.com/${API_VERSION}/${PHONE_NUMBER_ID}/messages`;
+    await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${WA_TOKEN}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+  } catch (err) {
+    console.error('Webhook handler error', err);
+  }
+});
+
+app.listen(APP_PORT, () => {
+  console.log(`Server listening on ${APP_PORT}`);
+});
