@@ -1,0 +1,32 @@
+databases:
+  - name: malvin-db
+    plan: free
+    databaseName: malvin
+    user: mxd
+
+services:
+  - type: web
+    name: malvin-xd
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: SESSION_ID
+        sync: false
+      - key: MODE
+        value: public
+      - key: TIME_ZONE
+        value: Africa/Nairobi
+      - key: AUTO_LIKE_STATUS
+        value: "true"
+      - key: AUTO_READ_STATUS
+        value: "true"
+        - key: MALVIN_API_KEY
+        vaue: "your api key here"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: malvin-db
+          property: connectionString
+      

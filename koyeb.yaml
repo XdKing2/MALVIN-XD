@@ -1,0 +1,76 @@
+deploymentname: malvin-xd
+
+services:
+  - name: web
+    type: web
+    git:
+      branch: main
+    docker:
+      dockerfile: Dockerfile
+      target: ""
+    instance_types:
+      - type: nano
+    regions:
+      - was
+    ports:
+      - port: 5000
+        protocol: http
+    routes:
+      - path: /
+        port: 5000
+    health_checks:
+      - grace_period: 10
+        interval: 60
+        restart_limit: 3
+        path: /health
+        port: 5000
+        protocol: http
+        timeout: 5
+    env:
+      - key: SESSION_ID
+        value: ""
+        scopes:
+          - region:was
+      - key: MODE
+        value: public
+        scopes:
+          - region:was
+      - key: TIME_ZONE
+        value: Africa/Harare
+        scopes:
+          - region:was
+      - key: AUTO_LIKE_STATUS
+        value: "true"
+        scopes:
+          - region:was
+      - key: AUTO_READ_STATUS
+        value: "true"
+        scopes:
+      - key: MALVIN_API_KEY
+        value: "your api key"
+        scopes:
+          - region:was
+      - key: DATABASE_URL
+        value: ""
+        scopes:
+          - region:was
+
+# ─────────────────────────────────────────────────────────────
+# SETUP INSTRUCTIONS (Koyeb)
+# ─────────────────────────────────────────────────────────────
+# DATABASE (free options — Koyeb has no built-in Postgres):
+#   → Neon.tech    : https://neon.tech          (free tier, generous)
+#   → Supabase     : https://supabase.com       (free tier)
+#   → Aiven        : https://aiven.io           (free trial)
+#
+# 1. Create a free PostgreSQL database on one of the above.
+# 2. Copy the connection string and set it as DATABASE_URL
+#    in the Koyeb service environment variables.
+# 3. Set SESSION_ID to your king~ session ID.
+# 4. Deploy via Koyeb dashboard → "Create App" → "GitHub" → pick repo,
+#    or use the Koyeb CLI:
+#      koyeb app init MALVIN-XD --config koyeb.yaml
+
+#    MALVIN_API_KEY   = <your key from api.malvin.gleeze.com dashboard>
+
+# ─────────────────────────────────────────────────────────────

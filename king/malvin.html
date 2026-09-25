@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MALVIN-XD | SUCCESS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #010409;
+            --accent: #00d2ff; /* Electric Blue */
+            --accent-glow: rgba(0, 210, 255, 0.2);
+            --card-bg: rgba(13, 17, 23, 0.8);
+            --border: rgba(56, 189, 248, 0.15);
+            --text-main: #f0f6fc;
+            --text-dim: #8b949e;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .mesh {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                radial-gradient(circle at 10% 10%, rgba(0, 210, 255, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(30, 64, 175, 0.05) 0%, transparent 40%);
+            z-index: -1;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 350px;
+            z-index: 10;
+            text-align: center;
+        }
+
+        .profile-img {
+            width: 85px;
+            height: 85px;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            object-fit: cover;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .main-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 30px 20px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { filter: drop-shadow(0 0 2px var(--accent-glow)); opacity: 0.8; }
+            50% { filter: drop-shadow(0 0 10px var(--accent)); opacity: 1; }
+        }
+
+        .success-msg {
+            color: var(--accent);
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+            animation: pulseGlow 3s infinite ease-in-out;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+            background: linear-gradient(180deg, #fff 50%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .metrics-panel {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 14px;
+            margin-bottom: 25px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .metric-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            margin: 5px 0;
+        }
+
+        .label { color: #484f58; }
+        .value { color: #fff; font-weight: 600; }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: var(--accent);
+            color: #010409;
+            text-decoration: none;
+            border-radius: 14px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            background: #fff;
+            box-shadow: 0 10px 20px rgba(0, 210, 255, 0.3);
+        }
+
+        .footer {
+            margin-top: 25px;
+            font-size: 0.55rem;
+            color: #484f58;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mesh"></div>
+
+    <div class="container">
+        <img src="https://i.ibb.co/zVLq4Y1v/0908391f2dd4.jpg" alt="MALVIN-XD" class="profile-img">
+
+        <div class="main-card">
+            <div class="success-msg">Deployment Successful</div>
+            <h1>MALVIN-XD V3</h1>
+
+            <div class="metrics-panel">
+                <div class="metric-item">
+                    <span class="label">STATUS</span>
+                    <span class="value" style="color: var(--accent);">STABLE</span>
+                </div>
+                <div class="metric-item">
+                    <span class="label">DATE</span>
+                    <span class="value" id="d_date">--.--.--</span>
+                </div>
+                <div class="metric-item">
+                    <span class="label">TIME</span>
+                    <span class="value" id="d_time">00:00:00</span>
+                </div>
+            </div>
+
+            <a href="https://github.com/XdKing2/MALVIN-XD" class="btn" target="_blank">
+                GitHub Repository
+            </a>
+        </div>
+
+        <p class="footer">MalvinTech &copy; 2025-26</p>
+    </div>
+
+    <script>
+        function update() {
+            const now = new Date();
+            document.getElementById('d_time').innerText = now.toLocaleTimeString('en-GB');
+            const d = now.getDate().toString().padStart(2, '0');
+            const m = (now.getMonth() + 1).toString().padStart(2, '0');
+            const y = now.getFullYear();
+            document.getElementById('d_date').innerText = `${d}.${m}.${y}`;
+        }
+        setInterval(update, 1000);
+        update();
+    </script>
+</body>
+</html>

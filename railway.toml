@@ -1,0 +1,29 @@
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+startCommand = "npm start"
+numReplicas = 1
+healthcheckPath = "/health"
+healthcheckTimeout = 100
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 5
+
+# ─────────────────────────────────────────────────────────────
+# SETUP INSTRUCTIONS (Railway)
+# ─────────────────────────────────────────────────────────────
+# 1. Push this repo to GitHub and import it on railway.app
+# 2. In your Railway project, click "+ New" → "Database" → "PostgreSQL"
+#    Railway auto-sets DATABASE_URL in your service via variable reference.
+# 3. In your service Variables tab, add:
+#
+#    SESSION_ID   = <your king~ session id>
+#    MODE         = public
+#    TIME_ZONE    = Africa/Harare
+#    AUTO_LIKE_STATUS = true
+#    AUTO_READ_STATUS = true
+#    MALVIN_API_KEY   = <your key from api.malvin.gleeze.com dashboard>
+#
+#    DATABASE_URL is automatically linked from the Postgres plugin.
+# ─────────────────────────────────────────────────────────────

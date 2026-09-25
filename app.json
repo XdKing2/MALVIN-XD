@@ -1,0 +1,70 @@
+{
+  "name": "MALVIN-XD",
+  "version": "3.0.0",
+  "description": "MXD, a Multi Device Whatsapp Bot built by Malvin Tech to Enhance Whatsapp Communication Experience",
+  "logo": "https://i.ibb.co/zHhMyRT3/malvin-xd.jpg",
+  "keywords": ["malvinxd","mrxdking", "mrxd-baileys", "malvin-btns", "malvin-api"],
+  "success_url": "/",
+  "stack": "heroku-22",
+  "env": {
+    "SESSION_ID": {
+      "description": "Your bot SESSION_ID. Get one from the pairing session page.",
+      "required": true,
+      "value": ""
+    },
+    "MODE": {
+      "description": "Worktype of your bot. Use 'public' (everyone can use it) or 'private' (only bot number).",
+      "required": true,
+      "value": "public"
+    },
+    "TIME_ZONE": {
+      "description": "Your timezone e.g. Africa/Harare, America/New_York, Asia/Kolkata",
+      "required": true,
+      "value": "Africa/Harare"
+    },
+    "AUTO_LIKE_STATUS": {
+      "description": "Auto-like WhatsApp statuses. Set true or false.",
+      "required": false,
+      "value": "true"
+    },
+    "AUTO_READ_STATUS": {
+      "description": "Auto-view WhatsApp statuses. Set true or false.",
+      "required": false,
+      "value": "true"
+    },
+    "DATABASE_URL": {
+      "description": "PostgreSQL connection URL. Leave blank to use the auto-provisioned Heroku Postgres addon, or supply your own (Neon, Supabase, etc.). Falls back to SQLite if empty and no addon is attached.",
+      "required": false,
+      "value": ""
+    },
+    "MALVIN_API_KEY": {
+      "description": "API key for api.malvin.gleeze.com. Sign up and get your key from the dashboard.",
+      "required": true,
+      "value": ""
+    }
+  },
+  "addons": [
+    {
+      "plan": "heroku-postgresql:essential-0",
+      "as": "DATABASE"
+    }
+  ],
+  "buildpacks": [
+    { "url": "heroku/nodejs" },
+    { "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest" }
+  ],
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  },
+  "environments": {
+    "test": {
+      "addons": [],
+      "env": {
+        "DATABASE_URL": ""
+      }
+    }
+  }
+}
