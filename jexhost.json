@@ -1,0 +1,45 @@
+{
+  "bot-name": "MALVIN-XD",
+  "owner-verification": "malvintech2@gmail.com",
+  "tagline": "MALVIN-XD, a Multi Device Whatsapp Bot built by Malvin Tech to Enhance Whatsapp Communication Experience",
+  "documentation-link": "https://github.com/XdKing2/MALVIN-XD#readme",
+  "session-helper-url": "https://session.malvintech.sbs/pair?bot=malvin",
+  "env": {
+    "SESSION_ID": {
+      "description": "Paired WhatsApp session string",
+      "required": true
+    },
+    "OWNER_NUMBER": {
+      "description": "Owner's WhatsApp number (with country code, no + or spaces)",
+      "required": true
+    },
+    "OWNER_NAME": {
+      "description": "Owner's display name",
+      "required": false,
+      "value": "Malvin"
+    },
+    "MODE": {
+      "description": "Bot mode: public or private",
+      "required": false,
+      "value": "public"
+    },
+    "TIME_ZONE": {
+      "description": "Timezone used for time-based features (e.g. Africa/Harare)",
+      "required": false,
+      "value": "Africa/Harare"
+    },
+    "DATABASE_URL": {
+      "description": "Postgres connection string (free from neon.tech, supabase, render, or Heroku). Falls back to local SQLite (./king/database/database.db) if not set",
+      "required": false
+    },
+    "MALVIN_API_KEY": {
+      "description": "API key from https://api.malvin.gleeze.com (sign up, key is on your dashboard)",
+      "required": true
+    },
+    "PORT": {
+      "description": "Port the bot's web server listens on",
+      "required": false,
+      "value": "5000"
+    }
+  }
+}
