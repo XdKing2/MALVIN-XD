@@ -30,6 +30,24 @@ const { sendButtons } = require("malvin-btns");
 
 const isValidBuffer = (buf) => Buffer.isBuffer(buf) && buf.length > 10240;
 
+// Safely turn any thrown value into a short, readable string for WhatsApp.
+// Handles real Errors, axios errors, and the non-Error rejections that
+// libraries like yt-search sometimes throw (which lack a .message).
+function describeError(error) {
+    if (!error) return "Unknown error (nothing was thrown)";
+    if (error.response?.data) {
+        const d = error.response.data;
+        return d?.error || d?.message || `HTTP ${error.response.status}`;
+    }
+    if (typeof error.message === "string" && error.message.length) return error.message;
+    if (typeof error === "string") return error;
+    try {
+        const s = JSON.stringify(error);
+        if (s && s !== "{}") return s.slice(0, 300);
+    } catch {}
+    return String(error);
+}
+
 // ==================== FOLLOW REDIRECT TO REAL FILE URL ====================
 async function getRealDownloadUrl(url) {
     try {
@@ -285,7 +303,7 @@ mxd(
     } catch (error) {
       console.error("Error:", error);
       await react("❌");
-      return reply(`Failed to fetch audio: ${error.message}`);
+      return reply(`Failed to fetch audio: ${describeError(error)}`);
     }
   },
 );
@@ -444,7 +462,7 @@ mxd(
     } catch (error) {
       console.error("Error:", error);
       await react("❌");
-      return reply(`Failed to fetch video: ${error.message}`);
+      return reply(`Failed to fetch video: ${describeError(error)}`);
     }
   },
 );
