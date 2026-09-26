@@ -92,6 +92,51 @@ async function fetchFromYoutube(videoUrl, conText) {
     return res.data?.data;
 }
 
+// ==================== FALLBACK: SAVETUBE ====================
+// Used automatically when /download/youtube2 fails (e.g. the worker gets a
+// redirect it can't follow for a specific video). Talks to a completely
+// different backend, so it recovers most per-video failures from the
+// primary source. Normalizes to the same {title, thumbnail, audio} /
+// {title, thumbnail, videos} shape fetchFromYoutube returns, so nothing
+// downstream needs to change.
+async function fetchFromSavetube(videoUrl, conText, type, quality) {
+    const { MalvinTechApi, MalvinApiKey } = conText;
+    const res = await axios.get(`${MalvinTechApi}/download/savetube`, {
+        params: { apikey: MalvinApiKey, url: videoUrl, type, ...(quality ? { quality } : {}) },
+        timeout: 30000,
+        validateStatus: () => true,
+    });
+    if (res.status >= 400 || res.data?.status === false) {
+        const apiMessage = res.data?.error || res.data?.message;
+        throw new Error(apiMessage || `Savetube fallback failed (HTTP ${res.status})`);
+    }
+    const d = res.data?.data;
+    if (type === "audio") {
+        return { title: d?.title, thumbnail: d?.thumbnail, audio: d?.download_url };
+    }
+    return { title: d?.title, thumbnail: d?.thumbnail, videos: d?.download_url ? { [d.quality]: d.download_url } : {} };
+}
+
+async function fetchAudio(videoUrl, conText) {
+    try {
+        const result = await fetchFromYoutube(videoUrl, conText);
+        if (result?.audio) return result;
+    } catch (error) {
+        console.log("youtube2 audio failed, trying savetube fallback:", describeError(error));
+    }
+    return fetchFromSavetube(videoUrl, conText, "audio");
+}
+
+async function fetchVideo(videoUrl, conText) {
+    try {
+        const result = await fetchFromYoutube(videoUrl, conText);
+        if (result?.videos && Object.keys(result.videos).length) return result;
+    } catch (error) {
+        console.log("youtube2 video failed, trying savetube fallback:", describeError(error));
+    }
+    return fetchFromSavetube(videoUrl, conText, "video", "720");
+}
+
 // ==================== SENDAUDIO ====================
 mxd(
   {
@@ -205,8 +250,8 @@ mxd(
 
       await react("🔍");
 
-      // Get data from your API
-      const result = await fetchFromYoutube(videoUrl, conText);
+      // Get data from your API (falls back to savetube automatically)
+      const result = await fetchAudio(videoUrl, conText);
 
       if (!result?.audio) {
         await react("❌");
@@ -345,8 +390,8 @@ mxd(
 
       await react("🔍");
 
-      // Get data from your API
-      const result = await fetchFromYoutube(videoUrl, conText);
+      // Get data from your API (falls back to savetube automatically)
+      const result = await fetchVideo(videoUrl, conText);
 
       if (!result?.videos) {
         await react("❌");
