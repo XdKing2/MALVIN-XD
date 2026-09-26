@@ -1,7 +1,5 @@
 const { mxd } = require("../king");
-const yts = require("yt-search");
 const axios = require("axios");
-const { classifyApiError } = require("../king/mxdcore2");
 
 function extractButtonId(msg) {
     if (!msg) return null;
@@ -29,10 +27,9 @@ const {
 const { sendButtons } = require("malvin-btns");
 
 const isValidBuffer = (buf) => Buffer.isBuffer(buf) && buf.length > 10240;
+const YT_URL_RE = /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)/i;
 
 // Safely turn any thrown value into a short, readable string for WhatsApp.
-// Handles real Errors, axios errors, and the non-Error rejections that
-// libraries like yt-search sometimes throw (which lack a .message).
 function describeError(error) {
     if (!error) return "Unknown error (nothing was thrown)";
     if (error.response?.data) {
@@ -48,93 +45,37 @@ function describeError(error) {
     return String(error);
 }
 
-// ==================== FOLLOW REDIRECT TO REAL FILE URL ====================
-async function getRealDownloadUrl(url) {
-    try {
-        const response = await axios.get(url, {
-            timeout: 15000,
-            headers: {
-                'User-Agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36'
-            }
-        });
-
-        // If the response has a fileUrl (ytdown.to style), use that
-        if (response.data?.fileUrl && response.data.fileUrl !== 'Waiting...') {
-            console.log('✅ Found real file URL:', response.data.fileUrl);
-            return response.data.fileUrl;
-        }
-
-        // If it's already a direct file, return original
-        return url;
-    } catch (e) {
-        console.log('⚠️ Failed to get real URL, using original:', e.message);
-        return url;
-    }
-}
-
-// ==================== FETCH FROM YOUR API ====================
-// GET /download/youtube2?url=&apikey=
-// Confirmed shape (same as downloads.js's yt command): { creator, title,
-// thumbnail, audio, videos: {144,240,360,480,720,1080}, available_qualities }
-async function fetchFromYoutube(videoUrl, conText) {
+// ==================== CLUTCH (search + download, single source) ====================
+// GET /download/clutchplay?query= — searches by name, returns a ready MP3
+// link plus metadata in one call.
+async function fetchFromClutchPlay(query, conText) {
     const { MalvinTechApi, MalvinApiKey } = conText;
-    const res = await axios.get(`${MalvinTechApi}/download/youtube2`, {
-        params: { apikey: MalvinApiKey, url: videoUrl },
+    const res = await axios.get(`${MalvinTechApi}/download/clutchplay`, {
+        params: { apikey: MalvinApiKey, query },
         timeout: 20000,
         validateStatus: () => true,
     });
     if (res.status >= 400 || res.data?.status === false) {
         const apiMessage = res.data?.error || res.data?.message;
-        if (apiMessage) throw new Error(apiMessage);
-        const { rawMessage } = classifyApiError(res.status, res.data);
-        throw new Error(rawMessage);
+        throw new Error(apiMessage || `Search failed (HTTP ${res.status})`);
     }
     return res.data?.data;
 }
 
-// ==================== FALLBACK: SAVETUBE ====================
-// Used automatically when /download/youtube2 fails (e.g. the worker gets a
-// redirect it can't follow for a specific video). Talks to a completely
-// different backend, so it recovers most per-video failures from the
-// primary source. Normalizes to the same {title, thumbnail, audio} /
-// {title, thumbnail, videos} shape fetchFromYoutube returns, so nothing
-// downstream needs to change.
-async function fetchFromSavetube(videoUrl, conText, type, quality) {
+// GET /download/clutchyt?url=&quality= — resolves a specific YouTube URL at
+// a specific quality.
+async function fetchFromClutchYoutube(videoUrl, conText, quality = "720") {
     const { MalvinTechApi, MalvinApiKey } = conText;
-    const res = await axios.get(`${MalvinTechApi}/download/savetube`, {
-        params: { apikey: MalvinApiKey, url: videoUrl, type, ...(quality ? { quality } : {}) },
+    const res = await axios.get(`${MalvinTechApi}/download/clutchyt`, {
+        params: { apikey: MalvinApiKey, url: videoUrl, quality },
         timeout: 30000,
         validateStatus: () => true,
     });
     if (res.status >= 400 || res.data?.status === false) {
         const apiMessage = res.data?.error || res.data?.message;
-        throw new Error(apiMessage || `Savetube fallback failed (HTTP ${res.status})`);
+        throw new Error(apiMessage || `Video fetch failed (HTTP ${res.status})`);
     }
-    const d = res.data?.data;
-    if (type === "audio") {
-        return { title: d?.title, thumbnail: d?.thumbnail, audio: d?.download_url };
-    }
-    return { title: d?.title, thumbnail: d?.thumbnail, videos: d?.download_url ? { [d.quality]: d.download_url } : {} };
-}
-
-async function fetchAudio(videoUrl, conText) {
-    try {
-        const result = await fetchFromYoutube(videoUrl, conText);
-        if (result?.audio) return result;
-    } catch (error) {
-        console.log("youtube2 audio failed, trying savetube fallback:", describeError(error));
-    }
-    return fetchFromSavetube(videoUrl, conText, "audio");
-}
-
-async function fetchVideo(videoUrl, conText) {
-    try {
-        const result = await fetchFromYoutube(videoUrl, conText);
-        if (result?.videos && Object.keys(result.videos).length) return result;
-    } catch (error) {
-        console.log("youtube2 video failed, trying savetube fallback:", describeError(error));
-    }
-    return fetchFromSavetube(videoUrl, conText, "video", "720");
+    return res.data?.data;
 }
 
 // ==================== SENDAUDIO ====================
@@ -240,31 +181,22 @@ mxd(
     }
 
     try {
-      const searchResponse = await yts(q);
-      if (!searchResponse.videos.length) {
-        return reply("No video found for your query.");
-      }
-
-      const firstVideo = searchResponse.videos[0];
-      const videoUrl = `https://youtu.be/${firstVideo.videoId}`;
-
       await react("🔍");
 
-      // Get data from your API (falls back to savetube automatically)
-      const result = await fetchAudio(videoUrl, conText);
+      const result = await fetchFromClutchPlay(q, conText);
 
       if (!result?.audio) {
         await react("❌");
         return reply("Failed to fetch audio. Please try again.");
       }
 
-      const title = result?.title || firstVideo.title;
-      const duration = firstVideo.timestamp;
-      const thumbnail = result?.thumbnail || firstVideo.thumbnail;
+      const title = result.title || "Audio";
+      const duration = result.duration || "N/A";
+      const thumbnail = result.thumbnail;
+      const videoId = result.video_id || Date.now().toString();
+      const watchUrl = result.url;
 
-      // Get the real download URL (follow redirect if needed)
-      const realUrl = await getRealDownloadUrl(result.audio);
-      let bufferRes = await mxdBuffer(realUrl);
+      let bufferRes = await mxdBuffer(result.audio);
 
       if (!isValidBuffer(bufferRes)) {
         await react("❌");
@@ -285,24 +217,28 @@ mxd(
       }
 
       const dateNow = Date.now();
-      const buttonId = `play_${firstVideo.id}_${dateNow}`;
+      const buttonId = `play_${videoId}_${dateNow}`;
+
+      const buttons = [
+        { id: `audio_${buttonId}`, text: "Audio 🎶" },
+        { id: `doc_${buttonId}`, text: "Audio Document 📄" },
+      ];
+      if (watchUrl) {
+        buttons.push({
+          name: "cta_url",
+          buttonParamsJson: JSON.stringify({
+            display_text: "Watch on Youtube",
+            url: watchUrl,
+          }),
+        });
+      }
 
       await sendButtons(Malvin, from, {
         title: `${botName} SONG DOWNLOADER`,
         text: `⿻ *Title:* ${title}\n⿻ *Duration:* ${duration}\n\n*Select download format:*`,
         footer: botFooter,
         image: { url: thumbnail || botPic },
-        buttons: [
-          { id: `audio_${buttonId}`, text: "Audio 🎶" },
-          { id: `doc_${buttonId}`, text: "Audio Document 📄" },
-          {
-            name: "cta_url",
-            buttonParamsJson: JSON.stringify({
-              display_text: "Watch on Youtube",
-              url: firstVideo.url,
-            }),
-          },
-        ],
+        buttons,
       });
 
       let cachedBuffer = null;
@@ -380,42 +316,33 @@ mxd(
     }
 
     try {
-      const searchResponse = await yts(q);
-      if (!searchResponse.videos.length) {
-        return reply("No video found for your query.");
-      }
-
-      const firstVideo = searchResponse.videos[0];
-      const videoUrl = `https://youtu.be/${firstVideo.videoId}`;
-
       await react("🔍");
 
-      // Get data from your API (falls back to savetube automatically)
-      const result = await fetchVideo(videoUrl, conText);
+      // A raw YouTube URL goes straight to clutchyt; a name/search term is
+      // resolved to a URL first via clutchplay's search.
+      let videoUrl = q;
+      if (!YT_URL_RE.test(q)) {
+        const searchResult = await fetchFromClutchPlay(q, conText);
+        if (!searchResult?.url) {
+          await react("❌");
+          return reply("No video found for your query.");
+        }
+        videoUrl = searchResult.url;
+      }
 
-      if (!result?.videos) {
+      const result = await fetchFromClutchYoutube(videoUrl, conText, "720");
+
+      if (!result?.video) {
         await react("❌");
         return reply("Failed to fetch video. Please try again.");
       }
 
-      // Get best quality (720p or lowest available)
-      let streamUrl = result.videos?.['720'] ||
-                      result.videos?.['480'] ||
-                      result.videos?.['360'] ||
-                      Object.values(result.videos)[0];
+      const title = result.title || "Video";
+      const duration = result.duration || "N/A";
+      const thumbnail = result.thumbnail;
+      const videoId = result.video_id || Date.now().toString();
 
-      if (!streamUrl) {
-        await react("❌");
-        return reply("No video stream available.");
-      }
-
-      const title = result?.title || firstVideo.title;
-      const duration = firstVideo.timestamp;
-      const thumbnail = result?.thumbnail || firstVideo.thumbnail;
-
-      // Get the real download URL (follow redirect if needed)
-      const realUrl = await getRealDownloadUrl(streamUrl);
-      let buffer = await mxdBuffer(realUrl);
+      let buffer = await mxdBuffer(result.video);
 
       if (!isValidBuffer(buffer)) {
         await react("❌");
@@ -441,24 +368,28 @@ mxd(
       }
 
       const dateNow = Date.now();
-      const buttonId = `video_${firstVideo.id}_${dateNow}`;
+      const buttonId = `video_${videoId}_${dateNow}`;
+
+      const buttons = [
+        { id: `vid_${buttonId}`, text: "Video 🎥" },
+        { id: `doc_${buttonId}`, text: "Video Document 📄" },
+      ];
+      if (result.url) {
+        buttons.push({
+          name: "cta_url",
+          buttonParamsJson: JSON.stringify({
+            display_text: "Watch on Youtube",
+            url: result.url,
+          }),
+        });
+      }
 
       await sendButtons(Malvin, from, {
         title: `${botName} VIDEO DOWNLOADER`,
         text: `⿻ *Title:* ${title}\n⿻ *Duration:* ${duration}\n\n*Select download format:*`,
         footer: botFooter,
         image: { url: thumbnail || botPic },
-        buttons: [
-          { id: `vid_${buttonId}`, text: "Video 🎥" },
-          { id: `doc_${buttonId}`, text: "Video Document 📄" },
-          {
-            name: "cta_url",
-            buttonParamsJson: JSON.stringify({
-              display_text: "Watch on Youtube",
-              url: firstVideo.url,
-            }),
-          },
-        ],
+        buttons,
       });
 
       let cachedBuffer = null;
