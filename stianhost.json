@@ -1,0 +1,64 @@
+{
+  "name": "MALVIN-XD",
+  "description": "MALVIN-XD, A Multi Device Whatsapp Bot built by Malvin Tech to Enhance Whatsapp Communication Experience",
+  "platform": "whatsapp",
+  "runtime": "node",
+  "version": "3.0.0",
+  "install": "npm install",
+  "start": "node index.js",
+  "memory_limit": "250MB",
+  "web": false,
+  "visibility": "public",
+  "env": {
+    "SESSION_ID": {
+      "description": "Your WhatsApp session ID. Get it at session.malvintech.sbs/pair?bot=malvin",
+      "required": true,
+      "type": "string"
+    },
+    "OWNER_NUMBER": {
+      "description": "Owner's WhatsApp number (with country code, no + or spaces)",
+      "required": true,
+      "type": "string"
+    },
+    "OWNER_NAME": {
+      "description": "Owner's display name",
+      "required": false,
+      "default": "Malvin",
+      "type": "string"
+    },
+    "MODE": {
+      "description": "Bot mode: public or private",
+      "required": false,
+      "default": "public",
+      "type": "string"
+    },
+    "TIME_ZONE": {
+      "description": "Timezone used for time-based features (e.g. Africa/Lagos)",
+      "required": false,
+      "default": "Africa/Lagos",
+      "type": "string"
+    },
+    "AUTO_READ_STATUS": {
+      "description": "Mark incoming WhatsApp statuses as read",
+      "required": false,
+      "default": "false",
+      "type": "boolean"
+    },
+    "AUTO_LIKE_STATUS": {
+      "description": "Auto-react to WhatsApp statuses",
+      "required": false,
+      "default": "false",
+      "type": "boolean"
+    },
+    "DATABASE_URL": {
+      "description": "Postgres connection string. Falls back to local SQLite if not set",
+      "required": false,
+      "type": "string"
+    },
+    "MALVIN_API_KEY": {
+      "description": "API key from api.malvin.gleeze.com",
+      "required": true,
+      "type": "string"
+    }
+  }
+}
