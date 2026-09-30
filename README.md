@@ -56,8 +56,8 @@
 <details>
 <summary>GET YOUR SESSION_ID</summary>
 
-<a href="https://session.malvintech.sbs/pair?bot=malvin"><img src="https://img.shields.io/badge/PAIRING%20CODE-green" alt="Pairing Code" width="150"></a>
-<a href="https://session.malvintech.sbs/qr?bot=malvin"><img src="https://img.shields.io/badge/QR%20CODE-teal" alt="QR Code" width="150"></a>
+<a href="https://session.malvintech.co.zw/pair?bot=malvin"><img src="https://img.shields.io/badge/PAIRING%20CODE-green" alt="Pairing Code" width="150"></a>
+<a href="https://session.malvintech.co.zw/qr?bot=malvin"><img src="https://img.shields.io/badge/QR%20CODE-teal" alt="QR Code" width="150"></a>
 
 - No forking required — anyone can generate a `SESSION_ID` from the link above.
 </details>
@@ -229,7 +229,7 @@ pm2 restart malvin-xd
 <details>
 <summary>TAP TO OPEN</summary>
 
-<a href="https://host.malvintech.sbs" target="_blank"><img src="https://img.shields.io/badge/MALVIN%20HOST%20SIGNUP-1E88E5?style=flat" alt="Malvin Host Signup" width="180"></a>
+<a href="https://host.malvintech.co.zw" target="_blank"><img src="https://img.shields.io/badge/MALVIN%20HOST%20SIGNUP-1E88E5?style=flat" alt="Malvin Host Signup" width="180"></a>
 
 - Sign up, claim your daily coins and select a bot instance, and set `SESSION_ID`, `MODE`, `TIME_ZONE`, `MALVIN_API_KEY` in the settings etc.
 </details>
